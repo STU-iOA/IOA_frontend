@@ -11,7 +11,7 @@
 				<input class="Input" v-model="username" type="text"  placeholder="输入校园邮箱"/>
 			</view>
 			<view class="input">
-				<!-- 密码输入框 -->
+				<!-- 密码输入框框 -->
 				<input class="Input" v-model="password" type="password"  placeholder="输入邮箱密码"/>
 			</view>
 		</view>
