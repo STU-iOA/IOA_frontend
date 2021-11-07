@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="img">
-			<!-- 登录图片 -->
+			<!-- 登录图片展示 -->
 			<image src="../../static/hxr/login.png" class="login_img"></image>
 		</view>
 		<view class="inputWrapper">
