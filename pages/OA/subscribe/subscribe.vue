@@ -1,7 +1,7 @@
 <template>
 	
 		
-	
+	//成功创建自己的分支
 	<view class="tab">
 		<view class="fix">
 		<view class="tabSwith">
