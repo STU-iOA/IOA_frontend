@@ -16,7 +16,7 @@
 		<!-- 选项卡1 -->
 		<view v-show="Inv == 0">
 			<view class="oaPosition">
-			<!-- 第一条OA -->
+			<!-- 第一条OA展示 -->
 			<view class="oaPreview">
 			<view class="oaText">
 				<view class="oaTitle">OA0</view>
@@ -47,7 +47,7 @@
 				</view>
 			</view>
 		</view>
-		<!-- 第二条OA -->
+		<!-- 第二条OA展示 -->
 		<view class="oaPreview">
 			<view class="oaText">
 				<view class="oaTitle">OA1</view>
