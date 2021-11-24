@@ -8,7 +8,7 @@
 			<!-- 输入框视图 -->
 			<view class="input">
 				<!-- 账号输入框 -->
-				<input class="Input" v-model="username" type="text"  placeholder="输入校园邮箱"/>
+				<input class="Input" v-model="account" type="text"  placeholder="输入校园邮箱"/>
 			</view>
 			<view class="input">
 				<!-- 密码输入框框 -->
@@ -26,19 +26,96 @@
 </template>
 
 <script>
+	import {
+		postLogin,
+	} from "./axios/login.js";
 	export default {
 		data() {
 			return {
-				username:'',
+				account:'',
 				password:''
 			}
 		},
 		methods: {
+			//检测有无令牌
+			//登录
+			postLogin(account,password){
+				return postLogin({account,password}).then(
+				(res) => {
+					let nowstate = [];
+					nowstate = res.data.code;
+					console.log(nowstate);
+					if(nowstate == 202){
+						uni.showToast({
+							title: '登录成功',
+							duration: 1500
+						});
+						//缓存token
+						new Promise((resolve,reject)=>{
+							uni.setStorage({
+								key:"token",
+								data:res.data.data,
+								success: function() {
+									console.log("ok");
+									resolve(1);
+								}
+							});
+						}).then(res=>{
+							uni.navigateTo({
+								url:"./Cding"
+							});
+							// this.isWrong = false;
+							// getUser().then((res) => {
+							// 	new Promise((resolve,reject)=>{
+							// 		uni.setStorage({
+							// 			key:"userInfo",
+							// 			data:res.data.data,
+							// 			success: function() {
+							// 				resolve(1);
+							// 			}
+							// 		});
+							// 	}).then(res=>{
+							// 		uni.switchTab({
+							// 			url:""
+							// 		})
+							// 	})
+							// });
+						}).catch(err=>{
+							console.log("登陆有个地方出了问题");
+						})
+					}
+					else if(nowstate == 200){
+						uni.showToast({
+							title: '登录成功',
+							duration: 1500
+						});
+						//缓存token
+						new Promise((resolve,reject)=>{
+							uni.setStorage({
+								key:"token",
+								data:res.data.data,
+								success: function() {
+									console.log("ok");
+									resolve(1);
+								}
+							});
+						}).then(res=>{
+							uni.switchTab({
+								url:"../OA/subscribe/subscribe"
+							});
+						}).catch(err=>{
+							console.log("二次登陆有个地方出了问题");
+							})
+					}
+					else{
+						console.log("4444");
+					}
+				}).catch(err=>{
+					console.log(err);
+				});
+			},
 			login(){
-			// 验证登录
-				uni.navigateTo({
-					url:"./Cding"
-				})
+				this.postLogin(this.account,this.password);
 			},
 		}
 	}
