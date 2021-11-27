@@ -88,7 +88,7 @@
 <script>
 	import{
 			getUserAccount
-		}from "../../../../axios/Me/Me.js";
+		}from "../../axios/Me/Me.js";
 	export default {
 		data() {
 			return {

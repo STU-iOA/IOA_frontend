@@ -137,7 +137,7 @@
 	import{
 			getOaFavorites,
 			removeFavorites
-		}from "../../../../axios/Me/Me.js";
+		}from "../../axios/Me/Me.js";
 	export default{
 		data(){
 			return{ 
