@@ -19,3 +19,15 @@ export function createApp() {
   }
 }
 // #endif
+
+if(process.env.NODE_ENV === 'development'){
+//开发环境
+// #ifdef H5
+Vue.prototype.$baseUrl = "/oa"
+// #endif
+// #ifdef APP-PLUS ||MP
+Vue.prototype.$baseUrl = "http://119.23.222.86:8890"
+// #endif
+}else{
+Vue.prototype.$baseUrl = "https://119.23.222.86:8890"
+}

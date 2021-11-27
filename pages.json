@@ -20,7 +20,7 @@
 				"app-plus":{
 					"titleNView":false
 				},
-		        "enablePullDownRefresh": true
+		        "enablePullDownRefresh": false
 		    }
 		    
 		},
