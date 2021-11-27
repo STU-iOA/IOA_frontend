@@ -1,8 +1,6 @@
 <template>
-
 	<view>
-		
-	
+		<!-- 背景 -->
 		<view class="background">
 			<image class="img" src="../../static/lsy/background.jpg" style="width: 100%;height: 100%;z-index: -1;" ></image>
 		</view>
@@ -10,7 +8,6 @@
 			<text>添加订阅</text>
 		</view>
 		<view class="content">
-			
 		<!-- 标签选择begin	 -->
 		<view class="choice_content">
 			<view class="row">
