@@ -46,6 +46,9 @@
 		{ 
 			"path": "pages/Me/level2/myPages/collect"
 		},
+		{
+			"path": "pages/Me/level2/myPages/test"
+		},
 		//张志宏 添加日程
 		{"path": "pages/addSchedule/addSche",
 			"style":{
