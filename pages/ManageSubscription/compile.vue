@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- 背景 -->
+		<!-- 背景4 -->
 		<view class="background">
 			<image class="img" src="../../static/lsy/background.jpg" style="width: 100%;height: 100%;z-index: -1;" ></image>
 		</view>
