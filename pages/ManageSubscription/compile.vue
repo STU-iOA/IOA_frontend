@@ -27,30 +27,17 @@
 					<button type="default">竞赛</button>
 				</view>
 			</view>	
+			
 			<!-- 书院弹窗 -->
 				<view class="popup" v-show="show">
 						<view class="popup-info">
 							<view class="row">
-							<button type="default">德馨</button>
-							<button type="default">至诚</button>
-							<button type="default">明德</button>
+							<button type="default"  v-for="(item,index) in xveyuan" :class="{'labelTag': rSelectXve.indexOf(index)!=-1}" @click="aClickXve(index)" >{{item}}</button>
 							</view>
-							<view class="row">
-								<button type="default">敬一</button>
-							<button type="default">修远</button>
-							<button type="default">知行</button>
-							</view>
-							<view class="row">
-							<button type="default">思源</button>
-							<button type="default">弘毅</button>
-							<button type="default">淑德</button>	
-							</view>
+							
 							<view class="popup-btn">
-								
 									<view><button type="default" class="affirm bubble" @tap="affirm">确认</button></view>
 									<view><button type="default" class="bubble" @tap="cancel">取消</button></view>
-								
-								
 							</view>
 					    </view>
 						
@@ -64,18 +51,6 @@
 							<view class="row">
 									<button type="default">工学院</button>
 									<button type="default">理学院</button>
-							</view>
-						    <view class="row">
-									<button type="default">商学院</button>
-									<button type="default">法学院</button>
-						    </view>
-							<view class="row">
-									<button type="default">医学院</button>
-								    <button type="default">新闻学院</button>
-							</view>
-							<view class="row">
-									<button type="default">艺术学院</button>
-									<button type="default">马克思院</button>
 							</view>
 							<view class="popup-btn">		
 											<view><button type="default" class="affirm bubble" @tap="affirm2">确认</button></view>
@@ -94,12 +69,7 @@
 			<view class="inside">
 				<input type="text" value="输入订阅内容关键词1" />
 			</view>
-			<!-- <view class="inside">
-			<input type="text" value="输入订阅内容关键词2" />
-			</view>
-			<view class="inside">
-			<input type="text" value="输入订阅内容关键词3" />
-			</view> -->
+
 		</view>
 		<navigator url="./subscription">
 		<button type="default" class="ok bubble" >确定</button>
@@ -121,25 +91,52 @@
 			return {	
 					show:false,
 					show2:false,
+					rSelectXve:[],
+					aSelectList:[],
+					
+					xveyuan:['工学院','理学院','文学院','商学院','法学院','马克思主义学院','长江艺术与设计学院','长江新闻与传播学院'],
 			}
 		},
 	
 		
 		onLoad() {
-
 		},
 		methods: {
 				// 弹窗
 					tapPopup() {
 						this.show = true;
 					},
+					
 					// 点击弹窗取消
 					cancel() {
 						this.show = false;
 					},
+					aClickXve(index) {
+						 let arrIndex = this.rSelectXve.indexOf(index);
+						if(arrIndex>-1){
+							this.rSelectXve.splice(arrIndex,1);
+							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								if(this.xveyuan[index] == this.aSelectList[i]){
+									this.aSelectList.splice(i,1);
+								}
+							}
+						}else{
+							this.rSelectXve.push(index);
+							this.aSelectList.push(this.xveyuan[index]);
+						}
+					},
 					// 点击弹窗确认
 					affirm() { 
 						this.show = false;
+						new Promise((resolve,reject)=>{
+								uni.setStorage({
+									key:"subDepart",
+									data:this.aSelectList,
+									success: function() {
+										resolve(1);
+									}
+								});});
+						
 					},
 					// 弹窗
 						tapPopup2() {
@@ -371,5 +368,16 @@
 		padding: 10rpx;
 		font-size: 40rpx;
 		background-color: rgba(158,69,189,0.6);
+	}
+	
+	.label_in{
+		margin-top: 16rpx;
+		width: 410rpx;
+		height: 150rpx;
+		display: flex;
+		flex-direction: raw;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
