@@ -8,7 +8,7 @@
 			<!-- 输入框视图 -->
 			<view class="input">
 				<!-- 账号输入框 -->
-				<input class="Input" v-model="account" type="text"  placeholder="输入校园邮箱"/>
+				<input class="Input" v-model="account" type="text"  placeholder="输入校园网账号"/>
 			</view>
 			<view class="input">
 				<!-- 密码输入框框 -->
@@ -108,7 +108,11 @@
 							})
 					}
 					else{
-						console.log("4444");
+						uni.showToast({
+							title: '账号密码错误',
+							duration: 1200,
+							icon : 'error',
+						});
 					}
 				}).catch(err=>{
 					console.log(err);
