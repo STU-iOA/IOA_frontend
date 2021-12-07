@@ -24,7 +24,7 @@
 			<view class="infoWindow" @click.stop="keepshow($event)"  :style="{top: infoWindowTop}">
 				<view class="windowTitle" :class="{'ani_windowTitle': ani_windowTitle}"><text>内容摘要</text></view>
 				
-				<view class="windowAbstract" :class="{'ani_windowAbstract': ani_windowAbstract}" :style="{height: abstractH}"><span><text>{{iteminfo[currentIndex].abContent}}</text></span></view>
+				<view class="windowAbstract" :class="{'ani_windowAbstract': ani_windowAbstract}" :style="{height: abstractH}"><span><text><!-- {{iteminfo[currentIndex].abContent}} --> {{abContent}}</text></span></view>
 				<view class="windowKwords" :class="{'ani_windowKwords': ani_windowKwords}"><text v-for="(word,index) in iteminfo[currentIndex].keyWords" :key='index'>{{word}}</text></view>
 				<view class="windowRnum" :class="{'ani_windowRnum': ani_windowRnum}"><text>阅读人数 {{iteminfo[currentIndex].readCount}}|收藏人数 {{iteminfo[currentIndex].favoredCount}}</text><text>{{iteminfo[currentIndex].timestamp}}</text></view>
 			</view>
@@ -58,140 +58,142 @@
 				refreshTri:true,
 				ifNext:false,
 				pageIndex:1,
+				// 暂时的内容摘要
+				abContent: "书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
 				restItemInfo: [
-					{
-						id: 8710,
-						title:"标题嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-10-10",
-						abContent:"书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉",
-						keyWords: ['关键词1关键词3','关键词3','关键词4','关键词5'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 7430,
-						title:"标题2嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-11-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉，书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 1030,
-						title:"标题3嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-12-10",
-						abContent:"书中自有黄金屋书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					}
+					// {
+					// 	id: 8710,
+					// 	title:"标题嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-10-10",
+					// 	abContent:"书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉",
+					// 	keyWords: ['关键词1关键词3','关键词3','关键词4','关键词5'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 7430,
+					// 	title:"标题2嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-11-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉，书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 1030,
+					// 	title:"标题3嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-12-10",
+					// 	abContent:"书中自有黄金屋书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// }
 				],               //下一页的
 				//OA Item
 				iteminfo:[
-					{
-						id: 8710,
-						title:"标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-10-10",
-						abContent:"书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉",
-						keyWords: ['关键词1关键词3','关键词3','关键词4','关键词5'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 7430,
-						title:"标题2嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-11-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉，书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 1030,
-						title:"标题3嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-12-10",
-						abContent:"书中自有黄金屋书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 3590,
-						title:"标题嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-10-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 11270,
-						title:"标题2嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-11-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 4870,
-						title:"标题3嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-12-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 6150,
-						title:"标题嗷嗷嗷",
-						subcompanyName: "通知单位",
-						announceDate: "2021-10-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 2310,
-						title:"标题2嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-11-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 9990,
-						title:"标题3嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-12-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					},
-					{
-						id: 12550,
-						title:"标题5嗷嗷嗷",
-						subcompanyName: "通知单位",
-						timestamp: "2021-12-10",
-						abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
-						keyWords: ['关键词1','关键词2','关键词2'],
-						readCount:1234,
-						favoredCount:1234
-					}
+					// {
+					// 	id: 8710,
+					// 	title:"标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷标题嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-10-10",
+					// 	abContent:"书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉书中自有黄金屋书中自有颜如玉",
+					// 	keyWords: ['关键词1关键词3','关键词3','关键词4','关键词5'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 7430,
+					// 	title:"标题2嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-11-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉，书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 1030,
+					// 	title:"标题3嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-12-10",
+					// 	abContent:"书中自有黄金屋书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 3590,
+					// 	title:"标题嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-10-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 11270,
+					// 	title:"标题2嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-11-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 4870,
+					// 	title:"标题3嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-12-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 6150,
+					// 	title:"标题嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	announceDate: "2021-10-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 2310,
+					// 	title:"标题2嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-11-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 9990,
+					// 	title:"标题3嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-12-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// },
+					// {
+					// 	id: 12550,
+					// 	title:"标题5嗷嗷嗷",
+					// 	subcompanyName: "通知单位",
+					// 	timestamp: "2021-12-10",
+					// 	abContent:"书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉",
+					// 	keyWords: ['关键词1','关键词2','关键词2'],
+					// 	readCount:1234,
+					// 	favoredCount:1234
+					// }
 				]
 			};
 		},
@@ -212,21 +214,36 @@
 				}
 				else{
 					let that = this;
+					// uni.getStorage({
+					// 	key:'subscrible',
+					// 	success(res){
+					// 		console.log("get sub storage: ");
+					// 		that.iteminfo=res.data;
+					// 	},
+					// 	fail(){
+					// 		console.log('没有缓存');
+					// 		let url = "http://119.23.222.86:8890/oa/favorites";
+					// 		let datas = {
+					// 			token:this.token,
+					// 			page:1,
+					// 			size:3
+					// 		}
+					// 		that.getItemList(url,datas);
+					// 	}
+					// })
+					
+					// 获取订阅内容
 					uni.getStorage({
-						key:'subscrible',
+						key:'subDepart',
 						success(res){
-							console.log("get sub storage: ");
-							that.iteminfo=res.data;
+							console.log("get subDepart");
+							// that.iteminfo=res.data
+							console.log(res.data)
 						},
-						fail(){
-							console.log('没有缓存');
-							let url = "http://119.23.222.86:8890/oa/favorites";
-							let datas = {
-								token:this.token,
-								page:1,
-								size:3
-							}
-							that.getItemList(url,datas);
+						fail(err){
+							that.noContent=true;
+							console.log("获取订阅失败")
+							console.log(err)
 						}
 					})
 					
@@ -235,13 +252,13 @@
 		},
 		created(){
 			this.getToken();
-			let url = "http://119.23.222.86:8890/oa/favorites";
-			let datas = {
-				token:this.token,
-				page:1,
-				size:10
-			}
-			this.getItemList(url,datas);
+			// let url = "http://119.23.222.86:8890/oa/favorites";
+			// let datas = {
+			// 	token:this.token,
+			// 	page:1,
+			// 	size:10
+			// }
+			// this.getItemList(url,datas);
 			this.refresh();
 		},
 		methods:{
@@ -291,7 +308,12 @@
 						this.infoWindowTop=index*21+itemH-this.scrollPos+130+'px';
 						console.log("this.infoWindowTop: "+this.infoWindowTop)
 						
-						let lines = Math.ceil((this.iteminfo[index].abContent.length)/14);
+						// let lines = Math.ceil((this.iteminfo[index].abContent.length)/14);
+						//使用暂时内容摘要代替
+						let lines = Math.ceil((this.abContent.length)/14);
+						
+						
+						
 						console.log(lines);
 						this.abstractH = lines*47+'rpx';
 						
@@ -385,18 +407,19 @@
 								this.ifNext=res.data.data.ifNext;
 								console.log(getItemsOnce)
 								
-								if(that.loadstorage){
-									console.log("进来了")
-									uni.setStorage({
-									    key: 'subscrible',
-									    data: getItemsOnce,
-									    success: function () {
-									        console.log('sub storage success');
-									    }
-									});
-									that.loadstorage=false;
-									return;
-								}
+								// 在本地获取收藏内容获取
+								// if(that.loadstorage){
+								// 	console.log("进来了")
+								// 	uni.setStorage({
+								// 	    key: 'subscrible',
+								// 	    data: getItemsOnce,
+								// 	    success: function () {
+								// 	        console.log('sub storage success');
+								// 	    }
+								// 	});
+								// 	that.loadstorage=false;
+								// 	return;
+								// }
 								
 								that.noContent=false;
 								if(getItemsOnce.length<=10){

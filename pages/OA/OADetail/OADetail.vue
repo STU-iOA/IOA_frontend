@@ -198,7 +198,11 @@
 						success(res){
 							that.buttonValue="收藏成功";
 							that.colltTapped='colltTapped';
-							that.updateStor=true;
+							
+							// 解决收藏后没有及时更新的问题
+							// that.updateStor=true;
+							
+							
 							console.log("收藏成功");
 							console.log(res)
 						},
@@ -225,7 +229,8 @@
 							that.buttonValue="收藏";
 							that.colltTapped='';
 							
-							that.updateStor=true;
+							// 解决取消收藏后没有及时更新的问题
+							// that.updateStor=true;
 							
 							console.log("取消收藏")
 							console.log(res)
