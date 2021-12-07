@@ -12,23 +12,23 @@
 		<view class="choice_content">
 			<view class="row">
 				<view class="choice_item">
-					<button type="default" @tap="tapPopup">书院</button>
+					<button type="default" @tap="tapPopup">学院</button>
 				</view>
 				<view class="choice_item">
-					<button type="default">奖学金</button>
+					<button type="default" v-for="(item,index) in jiangjin"  :class="{'labelTag': rSelectjiangjin.indexOf(index)!=-1}" @click="aClickjiangjin(index)">奖学金</button>
 				</view>
 				
 			</view>
 			<view class="row">
 				<view class="choice_item">
-					<button type="default"  @tap="tapPopup2">学院</button>
+					<button type="default"  @tap="tapPopup2">书院</button>
 				</view>
 				<view class="choice_item">
-					<button type="default">竞赛</button>
+					<button type="default"  v-for="(item,index) in jingsai"  :class="{'labelTag': rSelectjingsai.indexOf(index)!=-1}" @click="aClickjingsai(index)">竞赛</button>
 				</view>
 			</view>	
 			
-			<!-- 书院弹窗 -->
+			<!-- 学院弹窗 -->
 				<view class="popup" v-show="show">
 						<view class="popup-info">
 							<view class="row">
@@ -45,15 +45,14 @@
 						  
 
 				</view>
-				<!-- 学院弹窗 -->
+				<!-- 书院弹窗 -->
 				<view class="popup" v-show="show2">
 						<view class="popup-info">
 							<view class="row">
-									<button type="default">工学院</button>
-									<button type="default">理学院</button>
+									<button type="default"  v-for="(item,index) in shuyuan" :class="{'labelTag': rSelectShu.indexOf(index)!=-1}" @click="aClickShu(index)" >{{item}}</button>
 							</view>
 							<view class="popup-btn">		
-											<view><button type="default" class="affirm bubble" @tap="affirm2">确认</button></view>
+											<view><button type="default" class="affirm bubble" @tap="affirm">确认</button></view>
 											<view><button type="default" class="bubble" @tap="cancel2">取消</button></view>
 							</view>
 					    </view>
@@ -67,7 +66,7 @@
 		<!-- 标签输入添加 -->
 		<view class="input_box">
 			<view class="inside">
-				<input type="text" value="输入订阅内容关键词1" />
+				<input type="text" value="输入订阅内容关键词1" v-model="aSelectList"/>
 			</view>
 
 		</view>
@@ -92,9 +91,14 @@
 					show:false,
 					show2:false,
 					rSelectXve:[],
+					rSelectShu:[],
+					rSelectjiangjin:[],
+					rSelectjingsai:[],
 					aSelectList:[],
-					
+					shuyuan:['德馨书院','淑德书院','敬一书院','修远书院','明德书院','弘毅书院','思源书院','知行书院','至诚书院'],
 					xveyuan:['工学院','理学院','文学院','商学院','法学院','马克思主义学院','长江艺术与设计学院','长江新闻与传播学院'],
+					jiangjin:['奖学金'],
+					jingsai:['竞赛'],
 			}
 		},
 	
@@ -125,9 +129,52 @@
 							this.aSelectList.push(this.xveyuan[index]);
 						}
 					},
+					aClickShu(index) {
+						 let arrIndex = this.rSelectShu.indexOf(index);
+						if(arrIndex>-1){
+							this.rSelectShu.splice(arrIndex,1);
+							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								if(this.shuyuan[index] == this.aSelectList[i]){
+									this.aSelectList.splice(i,1);
+								}
+							}
+						}else{
+							this.rSelectShu.push(index);
+							this.aSelectList.push(this.shuyuan[index]);
+						}
+					},
+					aClickjiangjin(index) {
+						 let arrIndex = this.rSelectjiangjin.indexOf(index);
+						if(arrIndex>-1){
+							this.rSelectjiangjin.splice(arrIndex,1);
+							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								if(this.jiangjin[index] == this.aSelectList[i]){
+									this.aSelectList.splice(i,1);
+								}
+							}
+						}else{
+							this.rSelectjiangjin.push(index);
+							this.aSelectList.push(this.jiangjin[index]);
+						}
+					},
+					aClickjingsai(index) {
+						 let arrIndex = this.rSelectjingsai.indexOf(index);
+						if(arrIndex>-1){
+							this.rSelectjingsai.splice(arrIndex,1);
+							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								if(this.jingsai[index] == this.aSelectList[i]){
+									this.aSelectList.splice(i,1);
+								}
+							}
+						}else{
+							this.rSelectjingsai.push(index);
+							this.aSelectList.push(this.jingsai[index]);
+						}
+					},
 					// 点击弹窗确认
 					affirm() { 
 						this.show = false;
+						this.show2=false;
 						new Promise((resolve,reject)=>{
 								uni.setStorage({
 									key:"subDepart",
@@ -232,9 +279,10 @@
 		display: flex;
 		justify-content: center;
 		flex-direction:row;
+		flex-wrap: wrap;
 	}
 	.popup-info button{
-	
+
 		margin: 10px;
 		width: 100px;
 		background-color:  rgba(116,50,140,0.3);
