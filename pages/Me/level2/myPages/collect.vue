@@ -146,9 +146,12 @@
 				showUpImg:true,
 				currentIndex: -1,
 				array:["新闻学院","知行书院","荧光夜跑"],
-				keywords:["新闻学院","知行书院","明德书院","德馨书院","工学院"],
-				token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
+				// keywords:["新闻学院","知行书院","明德书院","德馨书院","工学院"],
+				keywords:[],
+				// token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
+				token:"",
 				isDeleteCode:0,
+				page:0,
 				src1:"../../../../static/Me/myPage/good.png",
 				src2:"../../../../static/Me/myPage/cancelGood.png",
 				oaList:[
@@ -168,9 +171,43 @@
 			}
 		},
 		onLoad() {
-			this.getOaFavorites(this.token,1,5);
+			this.getToken();
+			this.getSubDepart();
+			this.getOaFavorites(this.token,this.page,2);
 		},
-		methods:{	
+		onReachBottom() {
+			this.page++;
+			this.getOaFavorites(this.token,this.page,2);
+				},
+		methods:{
+			//获取缓存的用户token
+			getToken(){
+				let that=this;
+				let token="";
+				uni.getStorage({
+					key:'token',
+					success: function(res) {
+						token = res.data;
+						// that.getOaFavorites(this.token,1,20);
+					}					
+				});
+				this.token=token;
+				// console.log(this.token);
+			},
+			//获取缓存的用户订阅词
+			getSubDepart(){
+				let that=this;
+				let keyWords=[];
+				uni.getStorage({
+					key:'subDepart',
+					success: function(res) {
+						keyWords = res.data;
+						console.log(keyWords[0]);
+					}
+				});
+				this.keywords=keyWords;
+				console.log(this.keywords[0]);
+			},
 			// 按照订阅分类
 			classifyBySub:function(e,index){				
 					var indexindex = e.target.dataset.index;				
@@ -242,7 +279,7 @@
 			getOaFavorites(token,page,size){
 				return getOaFavorites(token,page,size).then(
 				(res) => {
-					// console.log("ok");
+					console.log("ok");
 					this.oaCount=res.data.data.oaDtoList.length;
 					this.oaList=res.data.data.oaDtoList;	
 					this.oaSubList=res.data.data.oaDtoList;
@@ -388,10 +425,9 @@
 	}
 	/* OA展示部分 */
 	.oaPosition{
-		/* margin-top: 300rpx; */
 		position: relative;
 		top: 300rpx;
-		margin-bottom: 150rpx;
+		padding-bottom: 160rpx;
 	}
 	.oaPreview{
 		margin-top: 60rpx;

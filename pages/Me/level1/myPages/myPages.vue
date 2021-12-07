@@ -7,8 +7,8 @@
 		<!-- 中间模块部分 -->
 		<view class="myPart">
 			<view class="photoPosition">
-				<image class="photo" src="../../../../static/Me/myPage/photo.jpg" mode=""></image>		    
-			</view>
+				<image class="photo" src="../../../../static/Me/myPage/user.png" mode=""></image>		    
+			</view> 
 			<view class="email"> 
 				<text>{{account}}</text>
 				<text>@stu.edu.cn</text>
@@ -70,7 +70,7 @@
 								<view><text>复制链接</text></view>
 							</view>
 							<view class="iconAndText">
-								<image class="iconShare" src="../../../../static/Me/myPage/photo.jpg" mode=""></image>
+								<image class="iconShare" src="../../../../static/Me/share/photo.png" mode=""></image>
 								<view><text>生成长图</text></view>
 							</view>
 							</view>
@@ -94,18 +94,33 @@
 			return {
 				// title: 'Hello'
 				show:false,
-				token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
+				// token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
+				token:"",
 				account:""
 			}
 		},
 		onLoad() {
-			this.getUserAccount(this.token);
+			this.getToken();
+			// this.getUserAccount(this.token);
 		},
 		methods: {
+			//获取缓存的用户token
+			getToken(){
+				let that=this;
+				uni.getStorage({
+					key:'token',
+					success: function(res) {
+						this.token = res.data;
+						that.getUserAccount(this.token);
+					}					
+				});
+				// console.log(token);
+			},
 			goToCollect(){
 				uni.navigateTo({
 					// 加上?id=1是为了在下一个页面使用navigateBack
 					url:'../../level2/myPages/collect?id=1'
+					// url:'../../level2/myPages/test'
 				})
 			},
 			goTosetting(){
