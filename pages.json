@@ -44,12 +44,12 @@
 			}
 		},
 		{ 
-			"path": "pages/Me/level2/myPages/collect",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 200
-						}
+			"path": "pages/Me/level2/myPages/collect"
+			// "style": {
+			// 	"navigationBarTitleText": "",
+			// 	"enablePullDownRefresh": true,
+			// 	"onReachBottomDistance": 200
+			// 			}
 
 		},
 		{

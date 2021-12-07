@@ -151,7 +151,7 @@
 				// token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
 				token:"",
 				isDeleteCode:0,
-				page:0,
+				// page:0,
 				src1:"../../../../static/Me/myPage/good.png",
 				src2:"../../../../static/Me/myPage/cancelGood.png",
 				oaList:[
@@ -173,12 +173,13 @@
 		onLoad() {
 			this.getToken();
 			this.getSubDepart();
-			this.getOaFavorites(this.token,this.page,2);
+			// this.getOaFavorites(this.token,this.page,2);
+			this.getOaFavorites(this.token,1,20);
 		},
-		onReachBottom() {
-			this.page++;
-			this.getOaFavorites(this.token,this.page,2);
-				},
+		// onReachBottom() {
+		// 	this.page++;
+		// 	this.getOaFavorites(this.token,this.page,2);
+		// 		},
 		methods:{
 			//获取缓存的用户token
 			getToken(){
@@ -259,6 +260,7 @@
 				var items = this.oaList;
 				// console.log(items[0].id);
 				var oaId=items[index].id;
+				var that=this;
 				// console.log(oaId);
 				this.removeFavorites(this.token,oaId);
 				setTimeout(function(){
