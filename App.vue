@@ -10,6 +10,7 @@
 			console.log('App Hide')
 		}
 	}
+	//app防杀程序
 </script>
 
 <style>
