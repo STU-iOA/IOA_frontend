@@ -19,11 +19,11 @@
 			      <!-- 年份 月份 -->
 			      <view class="month">
 						<view class="leftbtn" @click="weekPre()">
-							<img src="../../static/schedule/doubleLeft.png" mode=""></img>
+							<image src="../../static/schedule/doubleLeft.png" mode=""></image>
 						</view>
 						<view>{{ currentYear }}年{{ currentMonth }}月</view>
 						<view class="rightbtn" @click="weekNext()">
-							<img src="../../static/schedule/doubleRight.png" mode=""></img>
+							<image src="../../static/schedule/doubleRight.png" mode=""></image>
 						</view>
 			      </view>
 			      <!-- 星期 -->
@@ -510,16 +510,20 @@
 	   line-height: 50rpx;
 	}
 	.leftbtn{
+		
 		padding-left: 20rpx;
+		
 	}
 	.rightbtn{
 		padding-right: 20rpx;
 	}
-	.leftbtn img{
-	   width: 50rpx;
-	   height: 50rpx;
+	.leftbtn image{
+		top: 2rpx;
+		width: 50rpx;
+		height: 50rpx;
 	}
-	.rightbtn img{
+	.rightbtn image{
+		top: 2rpx;
 	   width: 50rpx;
 	   height: 50rpx;
 	}
