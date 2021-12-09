@@ -7,10 +7,11 @@
 		<!-- 中间模块部分 -->
 		<view class="myPart">
 			<view class="photoPosition">
-				<image class="photo" src="../../../../static/Me/myPage/photo.jpg" mode=""></image>		    
-			</view>
+				<image class="photo" src="../../../../static/Me/myPage/user.png" mode=""></image>		    
+			</view> 
 			<view class="email"> 
-				<text>哈哈哈哈@stu.edu.cn</text>
+				<text>{{account}}</text>
+				<text>@stu.edu.cn</text>
 			</view>
 			<view class="line lineFirst"></view>
 			<view class="icon crownIcon" @click="goToCollect">
@@ -69,7 +70,7 @@
 								<view><text>复制链接</text></view>
 							</view>
 							<view class="iconAndText">
-								<image class="iconShare" src="../../../../static/Me/myPage/photo.jpg" mode=""></image>
+								<image class="iconShare" src="../../../../static/Me/share/photo.png" mode=""></image>
 								<view><text>生成长图</text></view>
 							</view>
 							</view>
@@ -85,21 +86,41 @@
 </template>
 
 <script>
+	import{
+			getUserAccount
+		}from "../../axios/Me/Me.js";
 	export default {
 		data() {
 			return {
 				// title: 'Hello'
-				show:false
+				show:false,
+				// token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
+				token:"",
+				account:""
 			}
 		},
 		onLoad() {
-
+			this.getToken();
+			// this.getUserAccount(this.token);
 		},
 		methods: {
+			//获取缓存的用户token
+			getToken(){
+				let that=this;
+				uni.getStorage({
+					key:'token',
+					success: function(res) {
+						this.token = res.data;
+						that.getUserAccount(this.token);
+					}					
+				});
+				// console.log(token);
+			},
 			goToCollect(){
 				uni.navigateTo({
 					// 加上?id=1是为了在下一个页面使用navigateBack
 					url:'../../level2/myPages/collect?id=1'
+					// url:'../../level2/myPages/test'
 				})
 			},
 			goTosetting(){
@@ -107,15 +128,33 @@
 					url:'../../level2/myPages/setting?id=1'
 				})
 			},
-			// 分享
+			// 分享 
 			goToShare() {
 				this.show = true;
 			},
 			// 点击弹窗取消
 			cancel() {
 				this.show = false;
+			},
+			getUserAccount(token){
+				return getUserAccount({token}).then(
+				(res) => {
+					// console.log("ok")
+					// console.log(res.data.code);
+					// console.log(res.data.data);	
+					this.account=res.data.data;
+					},
+				(err) => {
+				  console.log(err);
+				  console.log("错误")
+				}
+				);
 			}
-	
+			// test(){
+			// 	console.log(this.token);
+			// 	// var token="86598b08-f63d-4861-afc5-4cbdb92e1383"
+			// 	this.getUserAccount(this.token);
+			// }	
 		}
 	}
 </script>

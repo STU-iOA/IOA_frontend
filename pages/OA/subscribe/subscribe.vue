@@ -1,17 +1,14 @@
 <template>
-	
-		
-	
 	<view class="tab">
 		<view class="fix">
-		<view class="tabSwith">
-			<view class="oaOption" :class="{'tabColor_ed':tabColor_ed}" @click="stickRun(1)"><text>OA</text></view>
-			<view class="sbcOption" :class="{'tabColor_ed':!tabColor_ed}" @click="stickRun(2)"><text>订阅</text></view>
-			<view class="scrollstick" :class="{'selectOA':selectOA, 'selectSbc':selectSbc}"></view>
-		</view>
-		<view class="inputBox">
-			<input type="text" placeholder=" 搜索" placeholder-class="iconfont icon-sousuo"/>
-		</view>
+			<view class="tabSwith">
+				<view class="oaOption" :class="{'tabColor_ed':tabColor_ed}" @click="stickRun(1)"><text>OA</text></view>
+				<view class="sbcOption" :class="{'tabColor_ed':!tabColor_ed}" @click="stickRun(2)"><text>订阅</text></view>
+				<view class="scrollstick" :class="{'selectOA':selectOA, 'selectSbc':selectSbc}"></view>
+			</view>
+			<view class="inputBox">
+				<input type="text" placeholder=" 搜索" placeholder-class="iconfont icon-sousuo"/>
+			</view>
 		</view>
 		<view>
 			<OAItemList :selectedCard="selectedNum"></OAItemList>
@@ -28,11 +25,18 @@
 				selectOA:true,		  //OA选项卡被选中的时候下划线位置
 				selectSbc:false,      //订阅选项卡被选中的时候下划线位置
 				tabColor_ed:true,     //OA或者订阅选项卡被选中时候字体颜色
-				selectedNum: 1        //OA或者订阅选项卡被选中时候对应的编号，1为OA，2为订阅
+				selectedNum: 1        ,//OA或者订阅选项卡被选中时候对应的编号，1为OA，2为订阅
 			}
 		},
+		onLoad(){
+		},
 		methods: {
-		
+			toJSON(){
+			   return this;	
+			},
+			toStyle(){
+			   return this;	
+			},
 			stickRun(num){       //选项卡动态
 				this.selectedNum=num;
 				if(num==1){
@@ -47,6 +51,7 @@
 					this.tabColor_ed=false;
 					console.log(2)
 				}
+				
 			}
 		}
 	}
@@ -57,14 +62,13 @@
 	/* 固定选项卡位置 ljs*/
 	.fix{
 		top: 0; 
-		
-		position: fixed;
+		padding-top: 100rpx;
+		/* position: fixed; */
 		z-index: 2;
 		width: 100%;
 		background-color: white;
 	}
 	.tab{
-		
 		background-color: #C8C7CC;
 	}
 	.tabSwith{
@@ -85,7 +89,7 @@
 	}
 	.scrollstick{
 		position: absolute;
-		top: 70rpx;
+		top: 170rpx;
 		background-color: #9E45BD !important;
 		width: 250rpx !important;
 		height: 8rpx !important;

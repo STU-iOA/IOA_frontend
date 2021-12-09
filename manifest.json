@@ -68,5 +68,25 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "2"
+    "vueVersion" : "2",
+    "h5" : {
+        "devServer" : {
+            "port" : "8081",
+            "disableHostCheck": true,
+             "proxy": {
+                "/oa": {
+                    "target": "http://119.23.222.86:8890",
+                    "changeOrigin": true,
+                    "secure": false,
+                    "pathRewrite":{"^/oa":""}
+                },
+	"/user-favorites":{
+	     "target": "http://119.23.222.86:8890",
+                     "changeOrigin": true,
+                     "secure": false,
+                     "pathRewrite":{"^/user-favorites":""}
+	}
+            }
+        }
+    }
 }
