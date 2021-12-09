@@ -194,8 +194,10 @@
 							that.buttonValue="收藏成功";
 							that.colltTapped='colltTapped';
 							
+
 							//解决收藏后没有及时更新缓存的问题
 							that.updateStor=true;
+
 							
 							
 							console.log("收藏成功");
@@ -224,8 +226,10 @@
 							that.buttonValue="收藏";
 							that.colltTapped='';
 							
+
 							//解决取消收藏后没有及时更新缓存的问题
 							that.updateStor=true;
+
 							
 							console.log("取消收藏")
 							console.log(res)

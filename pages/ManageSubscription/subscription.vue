@@ -10,9 +10,11 @@
 		<view class="content">
 		<!-- 标签开始 -->
 				  <view class="label_box"> 
+
 					<view class="box_inside" v-for="(item,index) in keywords" :key="index"  v-if="isRouterAlive"> 
 					<image src="../../static/lsy/close.png" v-show="isShow"  mode=""></image>
 						<image src="../../static/lsy/flower.png" mode="" @click="deletekeyword(index)"></image>
+
 						<view class="text_item">
 							
 						<text class="text_label">{{item}}</text>
@@ -65,14 +67,17 @@
 		onLoad() {
 
 			this.getSubDepart();
+
 			
 			// this.reload()
 			// this.reloadPage(); 
+
 		},
 		methods: {
 			showToggle(){
 			       this.isShow = !this.isShow
 			    },
+
 			// reloadPage () {
 			//     location. reload()
 			// },
@@ -84,6 +89,7 @@
 			      // this.$router.go(1);
 },
 			
+
 				//获取缓存的用户订阅词
 					getSubDepart(){
 								let that=this;
@@ -102,7 +108,9 @@
 				// 删除缓存的用户订阅词
 				deletekeyword (index) {
 				      const temp = this.keywords;
+
 				      temp.splice(index,1);
+
 					  console.log(temp);
 				      localStorage.setItem('searchword', JSON.stringify(temp));
 				      this.keywords = JSON.parse(localStorage.getItem('searchword'));

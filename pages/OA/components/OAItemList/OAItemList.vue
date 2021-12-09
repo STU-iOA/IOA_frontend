@@ -24,8 +24,10 @@
 			<view class="infoWindow" @click.stop="keepshow($event)"  :style="{top: infoWindowTop}">
 				<view class="windowTitle" :class="{'ani_windowTitle': ani_windowTitle}"><text>内容摘要</text></view>
 				
+
 				<view class="windowAbstract" :class="{'ani_windowAbstract': ani_windowAbstract}" :style="{height: abstractH}"><span><text>{{iteminfo[currentIndex].keyText}} </text></span></view>
 				<view class="windowKwords" :class="{'ani_windowKwords': ani_windowKwords}"><text v-for="(word,index) in iteminfo[currentIndex].keywords" :key='index'>{{word}}</text></view>
+
 				<view class="windowRnum" :class="{'ani_windowRnum': ani_windowRnum}"><text>阅读人数 {{iteminfo[currentIndex].readCount}}|收藏人数 {{iteminfo[currentIndex].favoredCount}}</text><text>{{iteminfo[currentIndex].timestamp}}</text></view>
 			</view>
 		</view>
@@ -59,7 +61,9 @@
 				ifNext:false,
 				pageIndex:1,
 				// 暂时的内容摘要
+
 				// abContent: "书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋",
+
 				restItemInfo: [
 					// {
 					// 	id: 8710,
@@ -238,8 +242,10 @@
 						success(res){
 							console.log("get subDepart");
 							// that.iteminfo=res.data
+
 							console.log(res.data);
 							that.searchFun(res.data);
+
 						},
 						fail(err){
 							that.noContent=true;
@@ -264,7 +270,9 @@
 			// 	size:10
 			// }
 			// this.getItemList(url,datas);
+
 			this.refresh(this.selectedCard);
+
 		},
 		methods:{
 			async getToken(){
@@ -313,6 +321,7 @@
 						this.infoWindowTop=index*21+itemH-this.scrollPos+130+'px';
 						console.log("this.infoWindowTop: "+this.infoWindowTop)
 						
+
 						let lines=0;
 						if(this.iteminfo[index].keyText){
 							lines = Math.ceil((this.iteminfo[index].keyText.length)/14);
@@ -323,6 +332,7 @@
 						}
 						//使用暂时内容摘要代替
 						// let lines = Math.ceil((this.abContent.length)/14);
+
 						
 						
 						
@@ -436,7 +446,6 @@
 								this.ifNext=res.data.data.ifNext;
 								console.log(getItemsOnce);
 								console.log()
-								
 								
 								// 在本地获取收藏内容获取
 								// if(that.loadstorage){

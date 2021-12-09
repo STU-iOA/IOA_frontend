@@ -2,13 +2,22 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		//黄禧荣 登陆页
 		{
-			"path": "pages/index/index"
+			"path": "pages/index/index",
+			 "style": {  
+			    "enablePullDownRefresh": false
+			  }  
 		},
 		{
-			"path": "pages/index/login"
+			"path": "pages/index/login",
+			"style": {
+			   "enablePullDownRefresh": false
+			 }  
 		},
 		{
-			"path": "pages/index/Cding"
+			"path": "pages/index/Cding",
+			"style": {
+			   "enablePullDownRefresh": false
+			 }  
 		},
 		//黄佳诗 OA首页和详情
 		{
@@ -45,6 +54,15 @@
 		},
 		{ 
 			"path": "pages/Me/level2/myPages/collect"
+			// "style": {
+			// 	"navigationBarTitleText": "",
+			// 	"enablePullDownRefresh": true,
+			// 	"onReachBottomDistance": 200
+			// 			}
+
+		},
+		{
+			"path": "pages/Me/level2/myPages/test"
 		},
 		//张志宏 添加日程
 		{"path": "pages/addSchedule/addSche",
