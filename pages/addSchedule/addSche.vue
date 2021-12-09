@@ -99,6 +99,19 @@
 			 this.eventInfo.ddl_day=this.eventInfo.deadline.substring(0,9)
 			 this.eventInfo.ddl_time=this.eventInfo.deadline.substring(11,19)
 		 },
+		 submitData(){
+			console.log('提交成功！')
+			console.log(this.eventDate)
+			console.log(this.eventInfo.detail)
+			console.log(this.eventInfo.sumup)
+			//重置变量信息
+			Object.assign(this.$data, this.$options.data())
+			
+			//提交成功后 由于是tabSwitch  所以采用特别的跳转方式 ljs
+			uni.switchTab({
+			    url: '/pages/schedule/schedule'
+			});
+		 },
 		  submitEvent(){
 			  if(this.eventInfo.deadline=='null'){
 				  uni.showModal({
@@ -120,14 +133,20 @@
 				  })
 			  }
 			  else{
-				  console.log('提交成功！')
-				  console.log(this.eventDate)
-				  console.log(this.eventInfo.detail)
-				  console.log(this.eventInfo.sumup)
-				  //提交成功后 由于是tabSwitch  所以采用特别的跳转方式 ljs
-				  uni.switchTab({
-				      url: '/pages/schedule/schedule'
-				  });
+				  var that = this;
+				  uni.showModal({
+				    title: '提示',
+				    content: '确定要提交吗？',
+					success: function (res) {
+					        if (res.confirm) {
+					            console.log('用户点击确定');
+								that.submitData()
+					        } else if (res.cancel) {
+					            console.log('用户点击取消');
+					        }
+					    }
+				  })
+				  
 			  }
 			  
 		  }
