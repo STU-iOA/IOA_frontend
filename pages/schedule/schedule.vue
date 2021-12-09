@@ -93,10 +93,6 @@
 		/*日程请求url*/
 		//获取用户日程数据:参数token
 		getDailyUrl: 'http://119.23.222.86:8890/daily/list',
-		//添加日程数据：token，content，conclusion
-		addDailyUrl: 'http://119.23.222.86:8890/daily/add-to-daily',
-		//删除某条日程数据：dailyId
-		deleteDailyUrl: 'http://localhost:8890/daily/remove-from-daily',
 		//对某条数据check：dailyId
 		checkDailyUrl: 'http://localhost:8890/daily/check',
 		
