@@ -10,9 +10,9 @@
 		<view class="content">
 		<!-- 标签开始 -->
 				  <view class="label_box"> 
-					<view class="box_inside" v-for="(item,index) in tags" :key="index" > 
+					<view class="box_inside" v-for="(item,index) in keywords" :key="index"  v-if="isRouterAlive"> 
 					<image src="../../static/lsy/close.png" v-show="isShow"  mode=""></image>
-						<image src="../../static/lsy/flower.png" mode=""></image>
+						<image src="../../static/lsy/flower.png" mode="" @click="deletekeyword(index)"></image>
 						<view class="text_item">
 							
 						<text class="text_label">{{item}}</text>
@@ -53,21 +53,70 @@
 	export default {
 		data() {
 			return {
-				tags:[
-					'工学院','思源书院','奖学金','淑德','竞赛','四六级',
-				],
+				keywords:[],
 				isShow:false,
+				
+			    isRouterAlive: false,
+
 			}
 		},
 	
 		
 		onLoad() {
 
+			this.getSubDepart();
+			
+			// this.reload()
+			// this.reloadPage(); 
 		},
 		methods: {
 			showToggle(){
 			       this.isShow = !this.isShow
 			    },
+			// reloadPage () {
+			//     location. reload()
+			// },
+			reload () {
+				this.isRouterAlive = false
+				this.$nextTick(function () {
+				  this.isRouterAlive = true
+				})
+			      // this.$router.go(1);
+},
+			
+				//获取缓存的用户订阅词
+					getSubDepart(){
+								let that=this;
+								let keyWords=[];
+								uni.getStorage({
+									key:'subDepart',
+									success: function(res) {
+										keyWords = res.data;
+										// console.log(keyWords[0]);
+									}
+								});
+								this.keywords=keyWords;
+								console.log('ok');
+								// console.log(this.keywords[0]);
+							},
+				// 删除缓存的用户订阅词
+				deletekeyword (index) {
+				      const temp = this.keywords;
+				      temp.splice(index,1);
+					  console.log(temp);
+				      localStorage.setItem('searchword', JSON.stringify(temp));
+				      this.keywords = JSON.parse(localStorage.getItem('searchword'));
+					  new Promise((resolve,reject)=>{
+					  	uni.setStorage({
+					  		key:"subDepart",
+					  		data:this.keywords,
+					  		success: function() {
+					  			console.log("ok");
+					  			resolve(1);
+					  		}
+					  	});
+				    },);
+					},
 			//跳转到添加订阅页面 ljs
 			addSubscription(){
 				uni.navigateTo({
@@ -107,6 +156,9 @@
 	align-items: center;
 	vertical-align: middle;
 	
+	}
+	.text_item:active{
+		color: #007AFF;
 	}
 	.box_inside:active{
 		transform: scale(1.5) ;

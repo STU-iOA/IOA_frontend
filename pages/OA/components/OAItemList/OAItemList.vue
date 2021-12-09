@@ -24,8 +24,8 @@
 			<view class="infoWindow" @click.stop="keepshow($event)"  :style="{top: infoWindowTop}">
 				<view class="windowTitle" :class="{'ani_windowTitle': ani_windowTitle}"><text>内容摘要</text></view>
 				
-				<view class="windowAbstract" :class="{'ani_windowAbstract': ani_windowAbstract}" :style="{height: abstractH}"><span><text><!-- {{iteminfo[currentIndex].abContent}} --> {{abContent}}</text></span></view>
-				<view class="windowKwords" :class="{'ani_windowKwords': ani_windowKwords}"><text v-for="(word,index) in iteminfo[currentIndex].keyWords" :key='index'>{{word}}</text></view>
+				<view class="windowAbstract" :class="{'ani_windowAbstract': ani_windowAbstract}" :style="{height: abstractH}"><span><text>{{iteminfo[currentIndex].keyText}} </text></span></view>
+				<view class="windowKwords" :class="{'ani_windowKwords': ani_windowKwords}"><text v-for="(word,index) in iteminfo[currentIndex].keywords" :key='index'>{{word}}</text></view>
 				<view class="windowRnum" :class="{'ani_windowRnum': ani_windowRnum}"><text>阅读人数 {{iteminfo[currentIndex].readCount}}|收藏人数 {{iteminfo[currentIndex].favoredCount}}</text><text>{{iteminfo[currentIndex].timestamp}}</text></view>
 			</view>
 		</view>
@@ -35,7 +35,7 @@
 <script>
 	export default {
 		name:"OAItemList",
-		props:{selectedCard:Number},
+		props:{selectedCard:Number, searchValue:String},
 		data() {
 			return {
 				currentIndex:10,   				//被选中的OA item
@@ -59,7 +59,7 @@
 				ifNext:false,
 				pageIndex:1,
 				// 暂时的内容摘要
-				abContent: "书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋",
+				// abContent: "书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋，书中自有颜如玉书中自有黄金屋",
 				restItemInfo: [
 					// {
 					// 	id: 8710,
@@ -238,7 +238,8 @@
 						success(res){
 							console.log("get subDepart");
 							// that.iteminfo=res.data
-							console.log(res.data)
+							console.log(res.data);
+							that.searchFun(res.data);
 						},
 						fail(err){
 							that.noContent=true;
@@ -248,6 +249,10 @@
 					})
 					
 				}
+			},
+			searchValue(){
+				console.log(this.searchValue);
+				this.searchFun(this.searchValue);
 			}
 		},
 		created(){
@@ -259,7 +264,7 @@
 			// 	size:10
 			// }
 			// this.getItemList(url,datas);
-			this.refresh();
+			this.refresh(this.selectedCard);
 		},
 		methods:{
 			async getToken(){
@@ -308,9 +313,16 @@
 						this.infoWindowTop=index*21+itemH-this.scrollPos+130+'px';
 						console.log("this.infoWindowTop: "+this.infoWindowTop)
 						
-						// let lines = Math.ceil((this.iteminfo[index].abContent.length)/14);
+						let lines=0;
+						if(this.iteminfo[index].keyText){
+							lines = Math.ceil((this.iteminfo[index].keyText.length)/14);
+						}
+						else{
+							this.iteminfo[index].keyText="哎呀~摘要不见了";
+							lines = Math.ceil((this.iteminfo[index].keyText.length)/14);
+						}
 						//使用暂时内容摘要代替
-						let lines = Math.ceil((this.abContent.length)/14);
+						// let lines = Math.ceil((this.abContent.length)/14);
 						
 						
 						
@@ -404,8 +416,27 @@
 							else{
 								console.log("有很多oa---")
 								let getItemsOnce=res.data.data.oaDtoList;
+								let regexpTime = /T/;
+								let index=0;
+								let content='';
+								let keywords=[];
+								for(let i=0; i<getItemsOnce.length; i++){
+									if(getItemsOnce[i].timestamp){
+										content=getItemsOnce[i].timestamp;
+										index = content.search(regexpTime);
+										getItemsOnce[i].timestamp=content.slice(0,index);
+									}
+									if(getItemsOnce[i].keywords){
+										
+										keywords = (getItemsOnce[i].keywords).split(";"); 
+										(getItemsOnce[i].keywords)=keywords;
+									}
+									
+								}
 								this.ifNext=res.data.data.ifNext;
-								console.log(getItemsOnce)
+								console.log(getItemsOnce);
+								console.log()
+								
 								
 								// 在本地获取收藏内容获取
 								// if(that.loadstorage){
@@ -450,23 +481,46 @@
 					})
 			
 			},
-			refresh(){
+			refresh(selectedCardNum){
 				if(this.refreshTri==false){
 					this.refreshTri=true;
 				}
 				let t =setTimeout(()=>{
 					console.log("刷新成功");
 					this.loadstorage=false;
-					let url="http://119.23.222.86:8890/oa/list";
-					let datas = {
-							page:1,
-							size:20,
-							order:1,
-							str:"通知"
-						}
-					this.getItemList(url,datas);
-					this.refreshTri=false;
-					clearTimeout(t);
+					if(this.selectedCard==1){
+						let url="http://119.23.222.86:8890/oa/list";
+						let datas = {
+								page:1,
+								size:20,
+								order:1,
+								str:"通知"
+							}
+						this.getItemList(url,datas);
+						this.refreshTri=false;
+						clearTimeout(t);
+						this.$emit("resetInput")
+					}
+					else{
+						let that=this;
+						uni.getStorage({
+							key:'subDepart',
+							success(res){
+								console.log("get subDepart");
+								// that.iteminfo=res.data
+								console.log(res.data);
+								that.searchFun(res.data);
+							},
+							fail(err){
+								that.noContent=true;
+								console.log("获取订阅失败")
+								console.log(err)
+							}
+						})
+						this.refreshTri=false;
+						clearTimeout(t);
+					}
+					
 				},1000)
 				this.pageIndex=1;
 			},
@@ -505,6 +559,67 @@
 					// 请求加载更多
 					this.isloadmore=false
 				}
+			},
+			searchFun(searchValue){
+				let that = this;
+				let d = 1; //请求次数
+				let searchArr=[]; //存放订阅词
+				let subinfo=[];   //存放订阅条目
+				if(typeof(searchValue)=="object"){
+					d = searchValue.length;
+					searchArr=searchValue;
+					console.log(searchArr)
+				}
+				else{
+					searchArr[0]=searchValue;
+				}
+				
+				
+				for(let i=0;i<d;i++){
+					uni.request({
+						url:"http://119.23.222.86:8890/oa/list",
+						data:{
+							page:1,
+							size:10,
+							str: searchArr[i],
+							order:0
+						},
+						success(res) {
+							console.log("搜索成功")
+							console.log(res)
+							let oaDtoList = res.data.data.oaDtoList;
+							if(oaDtoList){
+								// that.iteminfo=oaDtoList;
+								subinfo=subinfo.concat(oaDtoList);
+								
+							}
+							else{
+								
+								console.log("搜索不到订阅："+searchArr[i])
+							}
+						},
+						fail(err){
+							uni.showToast({
+								title:"搜索失败",
+								duration:2000
+							})
+							that.noContent=true;
+							console.log("搜索失败")
+							console.log(err)
+							return;
+						}
+					})
+				}
+				
+				let t=setTimeout(()=>{
+					if(subinfo){
+						this.iteminfo=subinfo;
+						that.noContent=false;
+						clearTimeout(t)
+					}
+				},500)
+				
+				
 			}
 		}
 		
