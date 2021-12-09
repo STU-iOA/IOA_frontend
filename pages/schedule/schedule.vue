@@ -15,11 +15,17 @@
 			<!-- 日历 -->
 			<!-- <image src="../../static/schedule/demo.png" mode="widthFix"></image> -->
 			<!-- 这里考虑到要根据日期切换下方的日程列表，需要与数据库交互，比较复杂，待设计；先贴个图以表尊敬 -->
-			   <div class="date">
+			   <view class="date">
 			      <!-- 年份 月份 -->
-			      <div class="month">
-			       <p>{{ currentYear }}年{{ currentMonth }}月</p>
-			      </div>
+			      <view class="month">
+						<view class="leftbtn" @click="weekPre()">
+							<img src="../../static/schedule/doubleLeft.png" mode=""></img>
+						</view>
+						<view>{{ currentYear }}年{{ currentMonth }}月</view>
+						<view class="rightbtn" @click="weekNext()">
+							<img src="../../static/schedule/doubleRight.png" mode=""></img>
+						</view>
+			      </view>
 			      <!-- 星期 -->
 			      <ul class="weekdays">
 			       <li>一</li>
@@ -34,15 +40,17 @@
 			      <ul class="days">
 			       <li @click="pick(day)" v-for="(day, index) in days" :key="index">
 			        <!--本月-->
-			        <span v-if="day.getMonth()+1 != currentMonth" class="other-month">{{ day.getDate() }}</span>
-			        <span v-else>
+			       <!-- <span v-if="day.getMonth()+1 != currentMonth" class="other-month">{{ day.getDate() }}</span>
+			        <span v-else> -->
 			        <!--今天-->
-			        <span v-if="day.getFullYear() == new Date().getFullYear() && day.getMonth() == new Date().getMonth() && day.getDate() == new Date().getDate()" class="active">{{ day.getDate() }}</span>
-			        <span v-else>{{ day.getDate() }}</span>
+			        <!-- <span v-if="day.getFullYear() == new Date().getFullYear() && day.getMonth() == new Date().getMonth() && day.getDate() == new Date().getDate()" class="active">{{ day.getDate()}}</span>
+			        <span v-else>{{ day.getDate() }}</span> -->
+					<span v-if="day.getFullYear() == pickDay.getFullYear() && day.getMonth() == pickDay.getMonth() && day.getDate() == pickDay.getDate()" class="active">{{ day.getDate()}}</span>
+					<span v-else>{{ day.getDate() }}</span>
 			        </span>
 			       </li>
 			      </ul>
-			    </div>
+			    </view>
 		</view>
 		<view class="remind">
 			<!-- 提醒 -->
@@ -82,6 +90,19 @@
 	
     data() {
       return {
+		/*日程请求url*/
+		//获取用户日程数据:参数token
+		getDailyUrl: 'http://119.23.222.86:8890/daily/list',
+		//添加日程数据：token，content，conclusion
+		addDailyUrl: 'http://119.23.222.86:8890/daily/add-to-daily',
+		//删除某条日程数据：dailyId
+		deleteDailyUrl: 'http://localhost:8890/daily/remove-from-daily',
+		//对某条数据check：dailyId
+		checkDailyUrl: 'http://localhost:8890/daily/check',
+		
+		//用户的token
+		token:'',
+		
 		//日历变量
 		currentYear: 1970,
 		currentMonth: 1,
@@ -89,6 +110,8 @@
 		currentWeek: 1,
 		days: [],
 		dataDay: [],
+		//用户选择的日期
+		pickDay:'',
 		  
 		//颜色集合
 		colorSet:{
@@ -113,67 +136,70 @@
 			//当前时间戳
 			timestamp:0
 		},
+		// 用户的所有日程数据
+		dailyList:[],
+		// 用户当天的日程列表
 		todayList:[
-		{
-			id:0,
-			//查收状态，即该事件是否已经完成
-			checkState:true,
-			//查收状态文本，默认check
-			checkText:'check',
-			//check按钮的颜色
-			checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
-			time:'8:00',
-			// 时间戳:这里是测试，这个时间戳的值已经过去
-			timestamp:1635474766840,
-			//标题最长8个字？
-			title:'可添加今日日程',
-			//时间状态，即该事件的时间是否过去
-			timeState:true,
-			//图标路径，默认为 go.png
-			iconPath:'../../static/schedule/go.png',
-			//中间的过渡的线条路径，默认为 loading.png
-			linePath:'../../static/schedule/loading.png'
+		// {
+		// 	id:0,
+		// 	//查收状态，即该事件是否已经完成
+		// 	checkState:true,
+		// 	//查收状态文本，默认check
+		// 	checkText:'check',
+		// 	//check按钮的颜色
+		// 	checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
+		// 	time:'8:00',
+		// 	// 时间戳:这里是测试，这个时间戳的值已经过去
+		// 	timestamp:1635474766840,
+		// 	//标题最长8个字？
+		// 	title:'可添加今日日程',
+		// 	//时间状态，即该事件的时间是否过去
+		// 	timeState:true,
+		// 	//图标路径，默认为 go.png
+		// 	iconPath:'../../static/schedule/go.png',
+		// 	//中间的过渡的线条路径，默认为 loading.png
+		// 	linePath:'../../static/schedule/loading.png'
 			
-		},
-		{
-			id:1,
-			checkState:false,
-			checkText:'check',
-			checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
-			time:'10:00',
-			timestamp:1635474766840,
-			title:'可添加今日日程',
-			timeState:false,
-			iconPath:'../../static/schedule/go.png',
-			linePath:'../../static/schedule/loading.png'
+		// },
+		// {
+		// 	id:1,
+		// 	checkState:false,
+		// 	checkText:'check',
+		// 	checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
+		// 	time:'10:00',
+		// 	timestamp:1635474766840,
+		// 	title:'可添加今日日程',
+		// 	timeState:false,
+		// 	iconPath:'../../static/schedule/go.png',
+		// 	linePath:'../../static/schedule/loading.png'
 			
-		},
-		{
-			id:2,
-			checkState:false,
-			checkText:'check',
-			checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
-			time:'14:00',
-			timestamp:2635474766850,
-			title:'可添加今日日程',
-			timeState:false,
-			iconPath:'../../static/schedule/go.png',
-			linePath:'../../static/schedule/loading.png'
+		// },
+		// {
+		// 	id:2,
+		// 	checkState:false,
+		// 	checkText:'check',
+		// 	checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
+		// 	time:'14:00',
+		// 	timestamp:2635474766850,
+		// 	title:'可添加今日日程',
+		// 	timeState:false,
+		// 	iconPath:'../../static/schedule/go.png',
+		// 	linePath:'../../static/schedule/loading.png'
 			
-		},
-		{
-			id:3,
-			checkState:false,
-			checkText:'check',
-			checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
-			time:'19:00',
-			timestamp:2635474766840,
-			title:'可添加今日日程',
-			timeState:false,
-			iconPath:'../../static/schedule/go.png',
-			linePath:'../../static/schedule/loading.png'
+		// },
+		// {
+		// 	id:3,
+		// 	checkState:false,
+		// 	checkText:'check',
+		// 	checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
+		// 	time:'19:00',
+		// 	timestamp:2635474766840,
+		// 	title:'可添加今日日程',
+		// 	timeState:false,
+		// 	iconPath:'../../static/schedule/go.png',
+		// 	linePath:'../../static/schedule/loading.png'
 			
-		}
+		// }
 		
 		]
       };
@@ -183,6 +209,7 @@
 	},
 	created () {
 	    this.initData(null)
+		this.getToken()
 	},
 	watch:{
 		'nowTime.timestamp':{
@@ -196,6 +223,21 @@
 		
 	},
 	methods:{
+		//获取缓存的用户token
+		getToken(){
+			let that=this;
+			uni.getStorage({
+				key:'token',
+				success: function(res) {
+					this.token = res.data;
+					// that.getUserAccount(this.token);
+					console.log(this.token)
+					that.getDaily(this.token)
+				}					
+			});
+			// console.log(token);
+			return this.token
+		},
 		// 获取当前时间
 		getTime(){
 			var date = new Date()
@@ -239,11 +281,14 @@
 		},
 		//用户点击check
 		checkBtn(event){
-			// console.log(event.id)
+			//console.log(event.id)
 			var id = event.id
-			this.todayList[id].checkState = !(this.todayList[id].checkState)
+			var index = this.todayList.findIndex(item => item.id === id)
+			// 根据用户点击的日程id 搜索数组，找到对应的item的数组下标
+			this.todayList[index].checkState = !(this.todayList[index].checkState)
 			this.updateState()
 		},
+		
 		//日历
 		formatDate (year, month, day) {
 		    const y = year
@@ -283,6 +328,7 @@
 				d.setDate(d.getDate() + i)
 				this.days.push(d)
 		    }
+			this.pickDay = new Date()
 		},
 		
 		// 上个星期
@@ -316,8 +362,74 @@
 		 
 		   // 当前选择日期
 		pick (date) {
-		    alert(this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate()))
+		    // alert(this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate()))
+			this.pickDay=date
+			console.log(this.pickDay)
 		},
+		//获取用户的日程信息
+		getDaily(token_){
+			let that = this;
+				uni.request({
+					url:this.getDailyUrl,
+					data:{
+						token: token_
+					},
+					success: (res) => {
+						that.dailyList = res.data.data	//获取到的日程信息赋值给 全局变量 dailyList[]
+						that.setTodayDaily()
+						//赋值操作
+						// for(let val of that.dailyList){
+						// //此处为重点
+						// 	that.$set(val,'discussAnswer','0');
+						// }
+						
+					},
+					fail: (err) => {
+						console.log(err)
+					}
+				})
+			
+		},
+		// 将全局变量的日程信息 dailyList 映射到 todayList
+		setTodayDaily(){
+			console.log(this.dailyList) 
+			let ones= {
+				id:0,
+				//查收状态，即该事件是否已经完成
+				checkState:false,
+				//查收状态文本，默认check
+				checkText:'check',
+				//check按钮的颜色
+				checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
+				time:'8:00',
+				// 时间戳:这里是测试，这个时间戳的值已经过去
+				timestamp:1635474766840,
+				//标题最长8个字？
+				title:'可添加今日日程',
+				//时间状态，即该事件的时间是否过去
+				timeState:true,
+				//图标路径，默认为 go.png
+				iconPath:'../../static/schedule/go.png',
+				//中间的过渡的线条路径，默认为 loading.png
+				linePath:'../../static/schedule/loading.png'
+			}
+			for(var i;i<this.dailyList.length;i++){
+				let thisDate = new Date(this.dailyList[i].date)
+				if(thisDate.getDate()==this.pickDay.getDate()){
+					console.log('111')
+				}
+			}
+			// 写到这里：要添加按照日期显示日程。这里由于日程数据不够，所以先去写添加日程。
+			ones.id = this.dailyList[0].dailyId
+			ones.timestamp = this.dailyList[0].timesTamp
+			ones.title = this.dailyList[0].conclusion
+			
+			
+			this.todayList.push(ones)
+			console.log(this.todayList)
+		},
+		
+		
 			
 	}
   };
@@ -369,6 +481,7 @@
 	  margin-right: 20rpx;
 	  color: #333;
 	 }
+	 
 	.weekdays {
 	   display: flex;
 	   font-size: 30rpx;
@@ -381,9 +494,29 @@
 	}
 	
 	.month {
-	   font-size: 20rpx;
+	   font-size: 30rpx;
 	   text-align: center;
 	   margin-top: 20rpx;
+	   display: flex;
+	   flex-direction: row;
+	   justify-content: space-between;
+	   height: 50rpx;
+	   /* overflow: hidden; */
+	   line-height: 50rpx;
+	}
+	.leftbtn{
+		padding-left: 20rpx;
+	}
+	.rightbtn{
+		padding-right: 20rpx;
+	}
+	.leftbtn img{
+	   width: 50rpx;
+	   height: 50rpx;
+	}
+	.rightbtn img{
+	   width: 50rpx;
+	   height: 50rpx;
 	}
 	 
 	.days {
