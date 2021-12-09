@@ -207,6 +207,9 @@
 	    this.initData(null)
 		this.getToken()
 	},
+	activated(){
+		this.getToken()
+	},
 	watch:{
 		'nowTime.timestamp':{
 			handler: 'updateState',
@@ -361,6 +364,7 @@
 		    // alert(this.formatDate(date.getFullYear(), date.getMonth() + 1, date.getDate()))
 			this.pickDay=date
 			console.log(this.pickDay)
+			this.setTodayDaily()
 		},
 		//获取用户的日程信息
 		getDaily(token_){
@@ -389,39 +393,44 @@
 		// 将全局变量的日程信息 dailyList 映射到 todayList
 		setTodayDaily(){
 			console.log(this.dailyList) 
-			let ones= {
-				id:0,
-				//查收状态，即该事件是否已经完成
-				checkState:false,
-				//查收状态文本，默认check
-				checkText:'check',
-				//check按钮的颜色
-				checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
-				time:'8:00',
-				// 时间戳:这里是测试，这个时间戳的值已经过去
-				timestamp:1635474766840,
-				//标题最长8个字？
-				title:'可添加今日日程',
-				//时间状态，即该事件的时间是否过去
-				timeState:true,
-				//图标路径，默认为 go.png
-				iconPath:'../../static/schedule/go.png',
-				//中间的过渡的线条路径，默认为 loading.png
-				linePath:'../../static/schedule/loading.png'
-			}
-			for(var i;i<this.dailyList.length;i++){
+			this.todayList.length = 0
+			for(var i=0;i<this.dailyList.length;i++){
+				let ones= {
+					id:0,
+					//查收状态，即该事件是否已经完成
+					checkState:false,
+					//查收状态文本，默认check
+					checkText:'check',
+					//check按钮的颜色
+					checkColor:'color:rgb(56, 158, 13);background-color:rgba(56, 158, 13, 0.2)',
+					time:'8:00',
+					// 时间戳:这里是测试，这个时间戳的值已经过去
+					timestamp:1635474766840,
+					//标题最长8个字？
+					title:'可添加今日日程',
+					//时间状态，即该事件的时间是否过去
+					timeState:true,
+					//图标路径，默认为 go.png
+					iconPath:'../../static/schedule/go.png',
+					//中间的过渡的线条路径，默认为 loading.png
+					linePath:'../../static/schedule/loading.png'
+				}
 				let thisDate = new Date(this.dailyList[i].date)
 				if(thisDate.getDate()==this.pickDay.getDate()){
-					console.log('111')
+					ones.id = this.dailyList[i].dailyId
+					ones.timestamp = this.dailyList[i].timesTamp
+					ones.title = this.dailyList[i].conclusion
+					/*时间格式化 + 拼接*/
+					let hour = thisDate.getHours();
+					let minute = thisDate.getMinutes();
+					hour = hour > 9 ? hour : '0' + hour
+					minute = minute > 9 ? minute : '0' + minute
+					ones.time = hour + ':' + minute
+					this.todayList.push(ones)
 				}
 			}
 			// 写到这里：要添加按照日期显示日程。这里由于日程数据不够，所以先去写添加日程。
-			ones.id = this.dailyList[0].dailyId
-			ones.timestamp = this.dailyList[0].timesTamp
-			ones.title = this.dailyList[0].conclusion
-			
-			
-			this.todayList.push(ones)
+
 			console.log(this.todayList)
 		},
 		
