@@ -64,6 +64,10 @@
 	export default {
 	data() {
 	  return {
+		  //添加日程数据：token，content，conclusion
+		  addDailyUrl: 'http://119.23.222.86:8890/daily/add-to-daily',
+		  //删除某条日程数据：dailyId
+		  deleteDailyUrl: 'http://localhost:8890/daily/remove-from-daily',
 		  eventDate:'',
 		  eventInfo:{
 			  //创建日期：保留，不知道是否必要
@@ -90,6 +94,9 @@
 			  immediate: true
 		  }
 	  },
+	  created () {
+			this.getToken()
+	  },
 	  methods:{
 		  /*
 		  选择日期后，根据eventDate更新 eventInfo 的日期数据
@@ -100,17 +107,13 @@
 			 this.eventInfo.ddl_time=this.eventInfo.deadline.substring(11,19)
 		 },
 		 submitData(){
+			this.getDaily(this.token,this.eventInfo.detail,this.eventInfo.sumup)
+			
 			console.log('提交成功！')
 			console.log(this.eventDate)
 			console.log(this.eventInfo.detail)
 			console.log(this.eventInfo.sumup)
-			//重置变量信息
-			Object.assign(this.$data, this.$options.data())
 			
-			//提交成功后 由于是tabSwitch  所以采用特别的跳转方式 ljs
-			uni.switchTab({
-			    url: '/pages/schedule/schedule'
-			});
 		 },
 		  submitEvent(){
 			  if(this.eventInfo.deadline=='null'){
@@ -149,7 +152,50 @@
 				  
 			  }
 			  
-		  }
+		  },
+		  //获取缓存的用户token
+		  getToken(){
+		  	let that=this;
+		  	uni.getStorage({
+		  		key:'token',
+		  		success: function(res) {
+		  			that.token = res.data;
+		  		}					
+		  	});
+			console.log(that.token)
+		  	return that.token
+		  },
+		  //提交日程
+		  getDaily(token_,content_,conclusion_){
+		  	let that = this;
+		  		uni.request({
+		  			url:this.addDailyUrl,
+					method:'POST',
+		  			data:{
+		  				token: token_,
+						content:content_,
+						conclusion:conclusion_,
+		  			},
+		  			success: (res) => {
+		  				console.log(token_)
+						console.log(content_)
+						console.log(conclusion_)
+						console.log(res)
+						
+		  				//提交成功后 重置页面的变量信息
+		  				Object.assign(this.$data, this.$options.data())
+		  				
+		  				//提交成功后 由于是tabSwitch  所以采用特别的跳转方式 ljs
+		  				uni.switchTab({
+		  				    url: '/pages/schedule/schedule'
+		  				});
+		  			},
+		  			fail: (err) => {
+		  				console.log(err)
+		  			}
+		  		})
+		  	
+		  },
 	  }
 	  
 	}
