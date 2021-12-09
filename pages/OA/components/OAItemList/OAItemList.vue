@@ -319,7 +319,7 @@
 						}
 						else{
 							this.iteminfo[index].keyText="哎呀~摘要不见了";
-							lines = Math.ceil((this.iteminfo[index].keyText.length)/14);
+							lines = Math.ceil((this.iteminfo[index].keyText.length)/14)+2;
 						}
 						//使用暂时内容摘要代替
 						// let lines = Math.ceil((this.abContent.length)/14);
@@ -613,7 +613,27 @@
 				
 				let t=setTimeout(()=>{
 					if(subinfo){
-						this.iteminfo=subinfo;
+						let getItemsOnce=subinfo;
+						let regexpTime = /T/;
+						let index=0;
+						let content='';
+						let keywords=[];
+						for(let i=0; i<getItemsOnce.length; i++){
+							if(getItemsOnce[i].timestamp){
+								content=getItemsOnce[i].timestamp;
+								index = content.search(regexpTime);
+								getItemsOnce[i].timestamp=content.slice(0,index);
+							}
+							if(getItemsOnce[i].keywords){
+								
+								keywords = (getItemsOnce[i].keywords).split(";"); 
+								(getItemsOnce[i].keywords)=keywords;
+							}
+							
+						}
+						
+						
+						this.iteminfo=getItemsOnce;
 						that.noContent=false;
 						clearTimeout(t)
 					}
