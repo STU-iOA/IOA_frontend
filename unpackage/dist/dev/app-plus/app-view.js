@@ -1680,7 +1680,20 @@ var render = function() {
                   type: "text",
                   placeholder: " 搜索",
                   "placeholder-class": "iconfont icon-sousuo",
+                  "confirm-type": "search",
                   _i: 9
+                },
+                on: {
+                  confirm: function($event) {
+                    return _vm.$handleViewEvent($event)
+                  }
+                },
+                model: {
+                  value: _vm._$g(9, "v-model"),
+                  callback: function($$v) {
+                    _vm.$handleVModelEvent(9, $$v)
+                  },
+                  expression: "resetValue"
                 }
               })
             ],
@@ -1692,7 +1705,16 @@ var render = function() {
       _c(
         "v-uni-view",
         { attrs: { _i: 10 } },
-        [_c("OAItemList", { attrs: { _i: 11 } })],
+        [
+          _c("OAItemList", {
+            attrs: { _i: 11 },
+            on: {
+              resetInput: function($event) {
+                return _vm.$handleViewEvent($event)
+              }
+            }
+          })
+        ],
         1
       )
     ],
@@ -2094,7 +2116,7 @@ __webpack_require__.r(__webpack_exports__);
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default =
 
 {
-  name: "OAItemList", props: ["selectedCard"],
+  name: "OAItemList", props: ["selectedCard", "searchValue"],
   data: function data() {
     return {
       wxsProps: {} };
@@ -2462,7 +2484,9 @@ var render = function() {
                   ),
                   _c(
                     "v-uni-scroll-view",
-                    { attrs: { "scroll-y": "true", _i: 25 } },
+                    {
+                      attrs: { "scroll-y": "true", "scroll-x": "true", _i: 25 }
+                    },
                     [
                       _c(
                         "v-uni-view",
@@ -2590,7 +2614,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.OAHead{\n\twidth: 100%;\n}\n.titlePart{\n\twidth: 746rpx;\n\theight: -webkit-fit-content;\n\theight: fit-content;\n\tborder: 2rpx solid #BFBFBF;\n\tfont-size: 40rpx;\n\ttext-align: center;\n}\n.titlePart span{\n\tdisplay: inline-block;\n\twidth: 600rpx;\n\theight: -webkit-fit-content;\n\theight: fit-content;\n\tmargin: 15rpx 0rpx;\n}\n.titlePart span uni-text{\n\t/* line-height: 300%; */\n}\n.arrow{\n\tposition: relative;\n\ttop: auto;  \n\twidth: -webkit-fit-content;  \n\twidth: fit-content;\n\theight: -webkit-fit-content;\n\theight: fit-content;\n\t-webkit-transform: translateX(-50%);\n\t        transform: translateX(-50%);\n\tleft: 50%;\n\t/* transition: transform 1s linear; */\n\tz-index: 11;\n\t/* background-color: #007AFF; */\n}\n.arrow uni-image{\n\twidth: 60rpx;\n\theight: 60rpx;\n\t\n\t-webkit-animation: ani-arrow 1.5s infinite;\n\t\n\t        animation: ani-arrow 1.5s infinite;\n}\n@-webkit-keyframes ani-arrow{\n25%{\n\t\t-webkit-transform: translate(0%,-3px);\n\t\t        transform: translate(0%,-3px);\n}\n50%,100%{\n\t\t-webkit-transform: translate(0%,0);\n\t\t        transform: translate(0%,0);\n}\n75%{\n\t\t-webkit-transform: translate(0%,3px);\n\t\t        transform: translate(0%,3px);\n}\n}\n@keyframes ani-arrow{\n25%{\n\t\t-webkit-transform: translate(0%,-3px);\n\t\t        transform: translate(0%,-3px);\n}\n50%,100%{\n\t\t-webkit-transform: translate(0%,0);\n\t\t        transform: translate(0%,0);\n}\n75%{\n\t\t-webkit-transform: translate(0%,3px);\n\t\t        transform: translate(0%,3px);\n}\n}\n.arrow_direction{\n\t-webkit-animation: arrow-direction 1s linear forwards;\n\t        animation: arrow-direction 1s linear forwards;\n\t/* transform: translateY(50px); */\n\t/* width: 100px; */\n}\n@-webkit-keyframes arrow-direction{\n0%{\n\t\t/* top: auto; */\n\t\t-webkit-transform: rotateZ(0deg) translateX(-50%);\n\t\t        transform: rotateZ(0deg) translateX(-50%);\n}\n50%{\n\t\t/* top:235rpx; */\n\t\t\n\t\t-webkit-transform: rotateZ(90deg) translateX(50%);\n\t\t\n\t\t        transform: rotateZ(90deg) translateX(50%);\n}\n100%{\n\t\t/* top: 450rpx; */\n\t\t-webkit-transform: rotateZ(180deg) translateX(50%);\n\t\t        transform: rotateZ(180deg) translateX(50%);\n}\n}\n@keyframes arrow-direction{\n0%{\n\t\t/* top: auto; */\n\t\t-webkit-transform: rotateZ(0deg) translateX(-50%);\n\t\t        transform: rotateZ(0deg) translateX(-50%);\n}\n50%{\n\t\t/* top:235rpx; */\n\t\t\n\t\t-webkit-transform: rotateZ(90deg) translateX(50%);\n\t\t\n\t\t        transform: rotateZ(90deg) translateX(50%);\n}\n100%{\n\t\t/* top: 450rpx; */\n\t\t-webkit-transform: rotateZ(180deg) translateX(50%);\n\t\t        transform: rotateZ(180deg) translateX(50%);\n}\n}\n.dataPart{\n\tposition: relative;\n\tz-index: 0;\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n\tbackground-color: white;\n\theight:0rpx;\n\toverflow: hidden;\n\tfont-size: 25rpx;\n}\n.ani_dataPart{\n\t-webkit-animation: ani-dataPart 0.5s linear forwards;\n\t        animation: ani-dataPart 0.5s linear forwards;\n}\n@-webkit-keyframes ani-dataPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 150rpx;\n}\n}\n@keyframes ani-dataPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 150rpx;\n}\n}\n.read_collect{\n\twidth: 400rpx;\n\tdisplay: flex;\n\tpadding-top: 20rpx;\n\tjustify-content: space-around;\n\ttext-align: center;\n}\n.read_collect uni-text{\n\twhite-space: pre-wrap;\n\tline-height: 200%;\n}\n.collBtn{\n\twidth: 220rpx;\n\tpadding-right: 30rpx;\n}\n.collBtn uni-button{\n\tposition: relative;\n\ttop: 50%;\n\t-webkit-transform: translateY(-70%);\n\t        transform: translateY(-70%);\n\tfont-size: 30rpx;\n\tcolor: white;\n\tborder-radius: 60rpx;\n\tbackground-color: #B068C9;\n}\n.colltTapped{\n\tbackground-color: #b39dc9 !important;\n}\n.kWPart{\n\tposition: relative;\n\tz-index: 10;\n\twidth: 100%;\n\tdisplay: flex;\n\t/* top: 340rpx; */\n\tbackground-color: white;\n\theight: 0rpx;\n\toverflow: hidden;\n\t/* justify-content: space-around; */\n\tpadding: 0rpx 0rpx;\n\tbox-shadow: 0rpx 4rpx 10rpx #BFBFBF;\n}\n.ani_KWPart{\n\t-webkit-animation: ani-KWPart 0.5s 0.5s linear forwards;\n\t        animation: ani-KWPart 0.5s 0.5s linear forwards;\n}\n@-webkit-keyframes ani-KWPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 122rpx;\n}\n}\n@keyframes ani-KWPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 122rpx;\n}\n}\n.kWPart uni-scroll-view uni-text{\n\tborder-radius: 20rpx;\n\tbackground-color: #B068C9;\n\tfont-size: 30rpx;\n\tcolor: white;\n\tpadding: 15rpx 35rpx;\n\tmargin-left: 50rpx;\n\tmargin-right: 10rpx;\n\tline-height: 430%;\n}\n.OAContent{\n\tposition: absolute;\n\ttop: auto;\n\twidth: 100%;\n}\n.OAContent uni-image{\n\tposition: absolute;\n\tleft: 3%;\n\twidth: 200rpx;\n\theight: 200rpx;\n\t-webkit-transform: rotateZ(-45deg);\n\t        transform: rotateZ(-45deg);\n\tz-index: 5;\n}\n.OAContent .contentBox{\n\tposition: relative;\n\twidth: 700rpx;\n\theight: 1100rpx;\n\tleft: 50%;\n\t-webkit-transform: translate(-50%, 8%);\n\t        transform: translate(-50%, 8%);\n\t\n\tbox-shadow: 0rpx 4rpx 10rpx 4rpx #BFBFBF;\n}\n.depart_time{\n\t/* width: 100%; */\n\theight: 80rpx;\n\tcolor: #C1C1C1;\n\tpadding-left: 25%;\n}\n.depart_time uni-text{\n\tline-height: 120rpx;\n}\n.main{\n\tposition: relative;\n\tdisplay: flex;\n}\n.main .left{\n\tfont-size: 40rpx;\n\tcolor: #CB9ADD;\n\twidth: 50rpx;\n\tpadding: 40rpx 20rpx 40rpx 30rpx;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n}\n.main .left uni-text{\n\tline-height: 80rpx;\n}\n.main uni-scroll-view{\n\twidth: 580rpx;\n\theight: 900rpx;\n\tpadding-bottom: 30rpx;\n\tborder-bottom: 2rpx solid #BFBFBF;\n}\n/* 返回上一页按钮 ljs*/\n.button{\n\tposition: fixed;\n\tz-index: 2;\n\tbottom: 0;\n\twidth: 100%;\n\theight: 120rpx;\n\tcolor: white;\n\tpadding: 10rpx;\n\tfont-size: 40rpx;\n\tbackground-color: rgba(158,69,189,0.6);\n}\n", ""]);
+exports.push([module.i, "\n.OAHead{\n\twidth: 100%;\n}\n.titlePart{\n\twidth: 746rpx;\n\theight: -webkit-fit-content;\n\theight: fit-content;\n\tborder: 2rpx solid #BFBFBF;\n\tfont-size: 50rpx;\n\ttext-align: center;\n}\n.titlePart span{\n\tdisplay: inline-block;\n\twidth: 600rpx;\n\theight: -webkit-fit-content;\n\theight: fit-content;\n\tmargin: 15rpx 0rpx;\n}\n.titlePart span uni-text{\n\t/* line-height: 300%; */\n}\n.arrow{\n\tposition: relative;\n\ttop: auto;  \n\twidth: -webkit-fit-content;  \n\twidth: fit-content;\n\theight: -webkit-fit-content;\n\theight: fit-content;\n\t-webkit-transform: translateX(-50%);\n\t        transform: translateX(-50%);\n\tleft: 50%;\n\t/* transition: transform 1s linear; */\n\tz-index: 11;\n\t/* background-color: #007AFF; */\n}\n.arrow uni-image{\n\twidth: 60rpx;\n\theight: 60rpx;\n\t\n\t-webkit-animation: ani-arrow 1.5s infinite;\n\t\n\t        animation: ani-arrow 1.5s infinite;\n}\n@-webkit-keyframes ani-arrow{\n25%{\n\t\t-webkit-transform: translate(0%,-3px);\n\t\t        transform: translate(0%,-3px);\n}\n50%,100%{\n\t\t-webkit-transform: translate(0%,0);\n\t\t        transform: translate(0%,0);\n}\n75%{\n\t\t-webkit-transform: translate(0%,3px);\n\t\t        transform: translate(0%,3px);\n}\n}\n@keyframes ani-arrow{\n25%{\n\t\t-webkit-transform: translate(0%,-3px);\n\t\t        transform: translate(0%,-3px);\n}\n50%,100%{\n\t\t-webkit-transform: translate(0%,0);\n\t\t        transform: translate(0%,0);\n}\n75%{\n\t\t-webkit-transform: translate(0%,3px);\n\t\t        transform: translate(0%,3px);\n}\n}\n.arrow_direction{\n\t-webkit-animation: arrow-direction 1s linear forwards;\n\t        animation: arrow-direction 1s linear forwards;\n\t/* transform: translateY(50px); */\n\t/* width: 100px; */\n}\n@-webkit-keyframes arrow-direction{\n0%{\n\t\t/* top: auto; */\n\t\t-webkit-transform: rotateZ(0deg) translateX(-50%);\n\t\t        transform: rotateZ(0deg) translateX(-50%);\n}\n50%{\n\t\t/* top:235rpx; */\n\t\t\n\t\t-webkit-transform: rotateZ(90deg) translateX(50%);\n\t\t\n\t\t        transform: rotateZ(90deg) translateX(50%);\n}\n100%{\n\t\t/* top: 450rpx; */\n\t\t-webkit-transform: rotateZ(180deg) translateX(50%);\n\t\t        transform: rotateZ(180deg) translateX(50%);\n}\n}\n@keyframes arrow-direction{\n0%{\n\t\t/* top: auto; */\n\t\t-webkit-transform: rotateZ(0deg) translateX(-50%);\n\t\t        transform: rotateZ(0deg) translateX(-50%);\n}\n50%{\n\t\t/* top:235rpx; */\n\t\t\n\t\t-webkit-transform: rotateZ(90deg) translateX(50%);\n\t\t\n\t\t        transform: rotateZ(90deg) translateX(50%);\n}\n100%{\n\t\t/* top: 450rpx; */\n\t\t-webkit-transform: rotateZ(180deg) translateX(50%);\n\t\t        transform: rotateZ(180deg) translateX(50%);\n}\n}\n.dataPart{\n\tposition: relative;\n\tz-index: 0;\n\tdisplay: flex;\n\twidth: 100%;\n\tjustify-content: space-between;\n\tbackground-color: white;\n\theight:0rpx;\n\toverflow: hidden;\n\tfont-size: 25rpx;\n}\n.ani_dataPart{\n\t-webkit-animation: ani-dataPart 0.5s linear forwards;\n\t        animation: ani-dataPart 0.5s linear forwards;\n}\n@-webkit-keyframes ani-dataPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 150rpx;\n}\n}\n@keyframes ani-dataPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 150rpx;\n}\n}\n.read_collect{\n\twidth: 400rpx;\n\tdisplay: flex;\n\tpadding-top: 20rpx;\n\tjustify-content: space-around;\n\ttext-align: center;\n}\n.read_collect uni-text{\n\twhite-space: pre-wrap;\n\tline-height: 200%;\n}\n.collBtn{\n\twidth: 220rpx;\n\tpadding-right: 30rpx;\n}\n.collBtn uni-button{\n\tposition: relative;\n\ttop: 50%;\n\t-webkit-transform: translateY(-70%);\n\t        transform: translateY(-70%);\n\tfont-size: 30rpx;\n\tcolor: white;\n\tborder-radius: 60rpx;\n\tbackground-color: #B068C9;\n}\n.colltTapped{\n\tbackground-color: #b39dc9 !important;\n}\n.kWPart{\n\tposition: relative;\n\tz-index: 10;\n\twidth: 100%;\n\tdisplay: flex;\n\t/* top: 340rpx; */\n\tbackground-color: white;\n\theight: 0rpx;\n\toverflow: hidden;\n\t/* justify-content: space-around; */\n\tpadding: 0rpx 0rpx;\n\tbox-shadow: 0rpx 4rpx 10rpx #BFBFBF;\n}\n.ani_KWPart{\n\t-webkit-animation: ani-KWPart 0.5s 0.5s linear forwards;\n\t        animation: ani-KWPart 0.5s 0.5s linear forwards;\n}\n@-webkit-keyframes ani-KWPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 122rpx;\n}\n}\n@keyframes ani-KWPart{\n0%{\n\t\tz-index: 10;\n\t\theight: 0rpx;\n}\n100%{\n\t\tz-index: 10;\n\t\theight: 122rpx;\n}\n}\n.kWPart uni-scroll-view uni-text{\n\tborder-radius: 20rpx;\n\tbackground-color: #B068C9;\n\tfont-size: 30rpx;\n\tcolor: white;\n\tpadding: 15rpx 35rpx;\n\tmargin-left: 50rpx;\n\tmargin-right: 10rpx;\n\tline-height: 430%;\n}\n.OAContent{\n\tposition: absolute;\n\ttop: auto;\n\twidth: 100%;\n}\n.OAContent uni-image{\n\tposition: absolute;\n\tleft: 3%;\n\twidth: 200rpx;\n\theight: 200rpx;\n\t-webkit-transform: rotateZ(-45deg);\n\t        transform: rotateZ(-45deg);\n\tz-index: 5;\n}\n.OAContent .contentBox{\n\tposition: relative;\n\twidth: 700rpx;\n\theight: 1100rpx;\n\tleft: 50%;\n\t-webkit-transform: translate(-50%, 8%);\n\t        transform: translate(-50%, 8%);\n\t\n\tbox-shadow: 0rpx 4rpx 10rpx 4rpx #BFBFBF;\n}\n.depart_time{\n\t/* width: 100%; */\n\theight: 80rpx;\n\tcolor: #C1C1C1;\n\tpadding-left: 25%;\n}\n.depart_time uni-text{\n\tline-height: 120rpx;\n}\n.main{\n\tposition: relative;\n\tdisplay: flex;\n}\n.main .left{\n\tfont-size: 40rpx;\n\tcolor: #CB9ADD;\n\twidth: 50rpx;\n\tpadding: 40rpx 20rpx 40rpx 30rpx;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n}\n.main .left uni-text{\n\tline-height: 80rpx;\n}\n.main uni-scroll-view{\n\twidth: 580rpx;\n\theight: 900rpx;\n\tpadding-bottom: 30rpx;\n\tborder-bottom: 2rpx solid #BFBFBF;\n}\n/* 返回上一页按钮 ljs*/\n.button{\n\tposition: fixed;\n\tz-index: 2;\n\tbottom: 0;\n\twidth: 100%;\n\theight: 120rpx;\n\tcolor: white;\n\tpadding: 10rpx;\n\tfont-size: 40rpx;\n\tbackground-color: rgba(158,69,189,0.6);\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -5696,57 +5720,64 @@ var render = function() {
             "v-uni-view",
             { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
             _vm._l(_vm._$g(7, "f"), function(item, index, $20, $30) {
-              return _c(
-                "v-uni-view",
-                {
-                  key: item,
-                  staticClass: _vm._$g("7-" + $30, "sc"),
-                  attrs: { _i: "7-" + $30 }
-                },
-                [
-                  _c("v-uni-image", {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm._$g("8-" + $30, "v-show"),
-                        expression: "_$g((\"8-\"+$30),'v-show')"
-                      }
-                    ],
-                    attrs: {
-                      src: _vm._$g("8-" + $30, "a-src"),
-                      mode: "",
-                      _i: "8-" + $30
-                    }
-                  }),
-                  _c("v-uni-image", {
-                    attrs: {
-                      src: _vm._$g("9-" + $30, "a-src"),
-                      mode: "",
-                      _i: "9-" + $30
-                    }
-                  }),
-                  _c(
+              return _vm._$g("7-" + $30, "i")
+                ? _c(
                     "v-uni-view",
                     {
-                      staticClass: _vm._$g("10-" + $30, "sc"),
-                      attrs: { _i: "10-" + $30 }
+                      key: item,
+                      staticClass: _vm._$g("7-" + $30, "sc"),
+                      attrs: { _i: "7-" + $30 }
                     },
                     [
-                      _c(
-                        "v-uni-text",
-                        {
-                          staticClass: _vm._$g("11-" + $30, "sc"),
-                          attrs: { _i: "11-" + $30 }
+                      _c("v-uni-image", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm._$g("8-" + $30, "v-show"),
+                            expression: "_$g((\"8-\"+$30),'v-show')"
+                          }
+                        ],
+                        attrs: {
+                          src: _vm._$g("8-" + $30, "a-src"),
+                          mode: "",
+                          _i: "8-" + $30
+                        }
+                      }),
+                      _c("v-uni-image", {
+                        attrs: {
+                          src: _vm._$g("9-" + $30, "a-src"),
+                          mode: "",
+                          _i: "9-" + $30
                         },
-                        [_vm._v(_vm._$g("11-" + $30, "t0-0"))]
+                        on: {
+                          click: function($event) {
+                            return _vm.$handleViewEvent($event)
+                          }
+                        }
+                      }),
+                      _c(
+                        "v-uni-view",
+                        {
+                          staticClass: _vm._$g("10-" + $30, "sc"),
+                          attrs: { _i: "10-" + $30 }
+                        },
+                        [
+                          _c(
+                            "v-uni-text",
+                            {
+                              staticClass: _vm._$g("11-" + $30, "sc"),
+                              attrs: { _i: "11-" + $30 }
+                            },
+                            [_vm._v(_vm._$g("11-" + $30, "t0-0"))]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
                   )
-                ],
-                1
-              )
+                : _vm._e()
             }),
             1
           )
@@ -5933,7 +5964,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.title[data-v-7a176831]{\n\t\tpadding-top: 30px;\n\t\tpadding-left: 40px;\n\t\tfont-size: 24px;\n\t\tcolor: white;\n}\n.content[data-v-7a176831] {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\talign-items: center;\n\t\tjustify-content: center;\n}\n.background[data-v-7a176831]{\n\t\twidth: 100%;\n\t\theight: 1100px;\n\t\tposition: absolute;\n}\n\t/* 订阅小标签 */\n.label_box[data-v-7a176831]{\n\tpadding: 25px;\n\tposition: relative;\n\t/* text-align: center; */\n\tdisplay: flex;\n\tflex-direction:column;\n\talign-items: center;\n\tvertical-align: middle;\n}\n.box_inside[data-v-7a176831]:active{\n\t\t-webkit-transform: scale(1.5) ;\n\t\t        transform: scale(1.5) ;\n\t\ttransition: all 1s ease-in-out;\n}\n.label_box uni-image[data-v-7a176831]{\n\t\tmargin-top: 2px;\n\t\tmargin-left: 5px;\n\t\twidth: 25px;\n\t\theight: 25px;\n}\n.box_inside[data-v-7a176831]{\n\t\tmargin: 9px;\n\t\theight: 39px;\n\t\tpadding-left: 10px;\n\t\tpadding-right:20px ;\n\t\twidth: auto;\n\t\tbackground:rgba(209, 213, 229, 0.7);\n\t\tborder-radius: 40px;\n\t\tcolor: #696969;\t\n\t\tfont-size: 16px;\n\t\tdisplay: flex;\n\t\tflex-direction:initial;\n\t\talign-items: center;\n\t\tvertical-align: middle;\n\t\tbox-shadow: 0 0 10px #8a8a8a;\n\t\t-webkit-animation: dong-data-v-7a176831 8s infinite;\n\t\t        animation: dong-data-v-7a176831 8s infinite;\n}\n@-webkit-keyframes dong-data-v-7a176831 {\n0% {             \n\t           -webkit-transform: translate(-80px, 0px);             \n\t                   transform: translate(-80px, 0px);\n}\n50% {                \n\t           -webkit-transform: translate(130px, 0px);                \n\t                   transform: translate(130px, 0px);\n}\n100% {                \n\t           -webkit-transform: translate(-80px, 0px);                \n\t                   transform: translate(-80px, 0px);\n}\n}\n@keyframes dong-data-v-7a176831 {\n0% {             \n\t           -webkit-transform: translate(-80px, 0px);             \n\t                   transform: translate(-80px, 0px);\n}\n50% {                \n\t           -webkit-transform: translate(130px, 0px);                \n\t                   transform: translate(130px, 0px);\n}\n100% {                \n\t           -webkit-transform: translate(-80px, 0px);                \n\t                   transform: translate(-80px, 0px);\n}\n}\n.text_label[data-v-7a176831]{\n\t\tcolor: #515662;\n}\n\t/* 编辑订阅 */\n.add[data-v-7a176831]{\n\tmargin-top: 50px;\n\tposition: relative;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: flex-end;\n}\n.add_box[data-v-7a176831]{\n\t\twidth: 130px;\n\t\theight: 70px;\n\t\tbackground:rgba(209, 213, 229, 0.7);\n\t\tborder-radius: 40px;\n\t\tcolor: #696969;\t\n\t\tfont-size: 18px;\n\t\tmargin-top: 15px;\n\t\tmargin-right: 20px;\n\t\ttext-align:center; \n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\t\n\t\tbox-shadow: 0 0 10px #946394;\n}\n.img_item[data-v-7a176831]{\n\t\tmargin: 0 auto;\n}\n.add_box uni-image[data-v-7a176831]{\n\t\twidth: 25px;\n\t\theight: 25px;\n}\n\t/* 气泡 */\n.bubble[data-v-7a176831] {\n\t\t\tposition: relative;\n\t\t\toverflow: hidden;\n}\n.bubble[data-v-7a176831]:after {\n\t\t\tcontent: \"哈哈(>~<)\";\n\t\t\t\n\t\t\tbackground: #af9bcc;\n\t\t\tposition: absolute;\n\t\t\twidth: 60px;\n\t\t\theight: 60px;\n\t\t\tleft: calc(50% - 75rpx);\n\t\t\ttop: calc(50% - 75rpx);\n\t\t\topacity: 0;\n\t\t\tmargin: auto; \n\t\t\t\n\t\t\tborder-radius: 50%;\n\t\t\t-webkit-transform: scale(0.3);\n\t\t\t        transform: scale(0.3);\n\t\t\ttransition: all 1s ease-in-out;\n}\n.bubble[data-v-7a176831]:active:after {\n\t\t\t-webkit-transform: scale(1.2);\n\t\t\t        transform: scale(1.2);\n\t\t\topacity: 1;\n\t\t\ttransition: 0.5s;\n}\n", ""]);
+exports.push([module.i, "\n.title[data-v-7a176831]{\n\t\tpadding-top: 30px;\n\t\tpadding-left: 40px;\n\t\tfont-size: 24px;\n\t\tcolor: white;\n}\n.content[data-v-7a176831] {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\talign-items: center;\n\t\tjustify-content: center;\n}\n.background[data-v-7a176831]{\n\t\twidth: 100%;\n\t\theight: 1100px;\n\t\tposition: absolute;\n}\n\t/* 订阅小标签 */\n.label_box[data-v-7a176831]{\n\tpadding: 25px;\n\tposition: relative;\n\t/* text-align: center; */\n\tdisplay: flex;\n\tflex-direction:column;\n\talign-items: center;\n\tvertical-align: middle;\n}\n.text_item[data-v-7a176831]:active{\n\t\tcolor: #007AFF;\n}\n.box_inside[data-v-7a176831]:active{\n\t\t-webkit-transform: scale(1.5) ;\n\t\t        transform: scale(1.5) ;\n\t\ttransition: all 1s ease-in-out;\n}\n.label_box uni-image[data-v-7a176831]{\n\t\tmargin-top: 2px;\n\t\tmargin-left: 5px;\n\t\twidth: 25px;\n\t\theight: 25px;\n}\n.box_inside[data-v-7a176831]{\n\t\tmargin: 9px;\n\t\theight: 39px;\n\t\tpadding-left: 10px;\n\t\tpadding-right:20px ;\n\t\twidth: auto;\n\t\tbackground:rgba(209, 213, 229, 0.7);\n\t\tborder-radius: 40px;\n\t\tcolor: #696969;\t\n\t\tfont-size: 16px;\n\t\tdisplay: flex;\n\t\tflex-direction:initial;\n\t\talign-items: center;\n\t\tvertical-align: middle;\n\t\tbox-shadow: 0 0 10px #8a8a8a;\n\t\t-webkit-animation: dong-data-v-7a176831 8s infinite;\n\t\t        animation: dong-data-v-7a176831 8s infinite;\n}\n@-webkit-keyframes dong-data-v-7a176831 {\n0% {             \n\t           -webkit-transform: translate(-80px, 0px);             \n\t                   transform: translate(-80px, 0px);\n}\n50% {                \n\t           -webkit-transform: translate(130px, 0px);                \n\t                   transform: translate(130px, 0px);\n}\n100% {                \n\t           -webkit-transform: translate(-80px, 0px);                \n\t                   transform: translate(-80px, 0px);\n}\n}\n@keyframes dong-data-v-7a176831 {\n0% {             \n\t           -webkit-transform: translate(-80px, 0px);             \n\t                   transform: translate(-80px, 0px);\n}\n50% {                \n\t           -webkit-transform: translate(130px, 0px);                \n\t                   transform: translate(130px, 0px);\n}\n100% {                \n\t           -webkit-transform: translate(-80px, 0px);                \n\t                   transform: translate(-80px, 0px);\n}\n}\n.text_label[data-v-7a176831]{\n\t\tcolor: #515662;\n}\n\t/* 编辑订阅 */\n.add[data-v-7a176831]{\n\tmargin-top: 50px;\n\tposition: relative;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: flex-end;\n}\n.add_box[data-v-7a176831]{\n\t\twidth: 130px;\n\t\theight: 70px;\n\t\tbackground:rgba(209, 213, 229, 0.7);\n\t\tborder-radius: 40px;\n\t\tcolor: #696969;\t\n\t\tfont-size: 18px;\n\t\tmargin-top: 15px;\n\t\tmargin-right: 20px;\n\t\ttext-align:center; \n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\t\n\t\tbox-shadow: 0 0 10px #946394;\n}\n.img_item[data-v-7a176831]{\n\t\tmargin: 0 auto;\n}\n.add_box uni-image[data-v-7a176831]{\n\t\twidth: 25px;\n\t\theight: 25px;\n}\n\t/* 气泡 */\n.bubble[data-v-7a176831] {\n\t\t\tposition: relative;\n\t\t\toverflow: hidden;\n}\n.bubble[data-v-7a176831]:after {\n\t\t\tcontent: \"哈哈(>~<)\";\n\t\t\t\n\t\t\tbackground: #af9bcc;\n\t\t\tposition: absolute;\n\t\t\twidth: 60px;\n\t\t\theight: 60px;\n\t\t\tleft: calc(50% - 75rpx);\n\t\t\ttop: calc(50% - 75rpx);\n\t\t\topacity: 0;\n\t\t\tmargin: auto; \n\t\t\t\n\t\t\tborder-radius: 50%;\n\t\t\t-webkit-transform: scale(0.3);\n\t\t\t        transform: scale(0.3);\n\t\t\ttransition: all 1s ease-in-out;\n}\n.bubble[data-v-7a176831]:active:after {\n\t\t\t-webkit-transform: scale(1.2);\n\t\t\t        transform: scale(1.2);\n\t\t\topacity: 1;\n\t\t\ttransition: 0.5s;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -6018,55 +6049,59 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-uni-view",
-    { attrs: { _i: 0 } },
-    [
-      _c(
+  return _vm._$g(0, "i")
+    ? _c(
         "v-uni-view",
-        { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
-        [
-          _c("v-uni-image", {
-            staticClass: _vm._$g(2, "sc"),
-            staticStyle: { width: "100%", height: "100%", "z-index": "-1" },
-            attrs: { src: _vm._$g(2, "a-src"), _i: 2 }
-          })
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
-        [_c("v-uni-text", { attrs: { _i: 4 } }, [_vm._v("添加订阅")])],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
+        { attrs: { _i: 0 } },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+            { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
+            [
+              _c("v-uni-image", {
+                staticClass: _vm._$g(2, "sc"),
+                staticStyle: { width: "100%", height: "100%", "z-index": "-1" },
+                attrs: { src: _vm._$g(2, "a-src"), _i: 2 }
+              })
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+            [_c("v-uni-text", { attrs: { _i: 4 } }, [_vm._v("添加订阅")])],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
             [
               _c(
                 "v-uni-view",
-                { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+                { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+                    { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
                     [
                       _c(
-                        "v-uni-button",
-                        {
-                          attrs: { type: "default", _i: 9 },
-                          on: {
-                            click: function($event) {
-                              return _vm.$handleViewEvent($event)
-                            }
-                          }
-                        },
-                        [_vm._v("书院")]
+                        "v-uni-view",
+                        { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+                        [
+                          _c(
+                            "v-uni-button",
+                            {
+                              attrs: { type: "default", _i: 9 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [_vm._v("学院")]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
@@ -6076,179 +6111,225 @@ var render = function() {
                     { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
                     [
                       _c(
-                        "v-uni-button",
-                        { attrs: { type: "default", _i: 11 } },
-                        [_vm._v("奖学金")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
-                    [
-                      _c(
-                        "v-uni-button",
-                        {
-                          attrs: { type: "default", _i: 14 },
-                          on: {
-                            click: function($event) {
-                              return _vm.$handleViewEvent($event)
-                            }
-                          }
-                        },
-                        [_vm._v("学院")]
+                        "v-uni-view",
+                        { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                        [
+                          _c(
+                            "v-uni-button",
+                            {
+                              attrs: { type: "default", _i: 12 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [_vm._v("书院")]
+                          )
+                        ],
+                        1
                       )
                     ],
                     1
                   ),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
-                    [
-                      _c(
-                        "v-uni-button",
-                        { attrs: { type: "default", _i: 16 } },
-                        [_vm._v("竞赛")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  directives: [
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm._$g(17, "v-show"),
-                      expression: "_$g(17,'v-show')"
-                    }
-                  ],
-                  staticClass: _vm._$g(17, "sc"),
-                  attrs: { _i: 17 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm._$g(13, "v-show"),
+                          expression: "_$g(13,'v-show')"
+                        }
+                      ],
+                      staticClass: _vm._$g(13, "sc"),
+                      attrs: { _i: 13 }
+                    },
                     [
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                        { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
                         [
                           _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 20 } },
-                            [_vm._v("德馨")]
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(15, "sc"),
+                              attrs: { _i: 15 }
+                            },
+                            _vm._l(_vm._$g(16, "f"), function(
+                              item,
+                              index,
+                              $20,
+                              $30
+                            ) {
+                              return _c(
+                                "v-uni-button",
+                                {
+                                  key: item,
+                                  class: _vm._$g("16-" + $30, "c"),
+                                  attrs: { type: "default", _i: "16-" + $30 },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$handleViewEvent($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v(_vm._$g("16-" + $30, "t0-0"))]
+                              )
+                            }),
+                            1
                           ),
                           _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 21 } },
-                            [_vm._v("至诚")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 22 } },
-                            [_vm._v("明德")]
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(17, "sc"),
+                              attrs: { _i: 17 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                { attrs: { _i: 18 } },
+                                [
+                                  _c(
+                                    "v-uni-button",
+                                    {
+                                      staticClass: _vm._$g(19, "sc"),
+                                      attrs: { type: "default", _i: 19 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("确认")]
+                                  )
+                                ],
+                                1
+                              ),
+                              _c(
+                                "v-uni-view",
+                                { attrs: { _i: 20 } },
+                                [
+                                  _c(
+                                    "v-uni-button",
+                                    {
+                                      staticClass: _vm._$g(21, "sc"),
+                                      attrs: { type: "default", _i: 21 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("取消")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
                           )
                         ],
                         1
-                      ),
+                      )
+                    ],
+                    1
+                  ),
+                  _c(
+                    "v-uni-view",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm._$g(22, "v-show"),
+                          expression: "_$g(22,'v-show')"
+                        }
+                      ],
+                      staticClass: _vm._$g(22, "sc"),
+                      attrs: { _i: 22 }
+                    },
+                    [
                       _c(
                         "v-uni-view",
                         { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
                         [
                           _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 24 } },
-                            [_vm._v("敬一")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 25 } },
-                            [_vm._v("修远")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 26 } },
-                            [_vm._v("知行")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(27, "sc"), attrs: { _i: 27 } },
-                        [
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 28 } },
-                            [_vm._v("思源")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 29 } },
-                            [_vm._v("弘毅")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 30 } },
-                            [_vm._v("淑德")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(31, "sc"), attrs: { _i: 31 } },
-                        [
-                          _c(
                             "v-uni-view",
-                            { attrs: { _i: 32 } },
-                            [
-                              _c(
+                            {
+                              staticClass: _vm._$g(24, "sc"),
+                              attrs: { _i: 24 }
+                            },
+                            _vm._l(_vm._$g(25, "f"), function(
+                              item,
+                              index,
+                              $21,
+                              $31
+                            ) {
+                              return _c(
                                 "v-uni-button",
                                 {
-                                  staticClass: _vm._$g(33, "sc"),
-                                  attrs: { type: "default", _i: 33 },
+                                  key: item,
+                                  class: _vm._$g("25-" + $31, "c"),
+                                  attrs: { type: "default", _i: "25-" + $31 },
                                   on: {
                                     click: function($event) {
                                       return _vm.$handleViewEvent($event)
                                     }
                                   }
                                 },
-                                [_vm._v("确认")]
+                                [_vm._v(_vm._$g("25-" + $31, "t0-0"))]
                               )
-                            ],
+                            }),
                             1
                           ),
                           _c(
                             "v-uni-view",
-                            { attrs: { _i: 34 } },
+                            {
+                              staticClass: _vm._$g(26, "sc"),
+                              attrs: { _i: 26 }
+                            },
                             [
                               _c(
-                                "v-uni-button",
-                                {
-                                  staticClass: _vm._$g(35, "sc"),
-                                  attrs: { type: "default", _i: 35 },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$handleViewEvent($event)
-                                    }
-                                  }
-                                },
-                                [_vm._v("取消")]
+                                "v-uni-view",
+                                { attrs: { _i: 27 } },
+                                [
+                                  _c(
+                                    "v-uni-button",
+                                    {
+                                      staticClass: _vm._$g(28, "sc"),
+                                      attrs: { type: "default", _i: 28 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("确认")]
+                                  )
+                                ],
+                                1
+                              ),
+                              _c(
+                                "v-uni-view",
+                                { attrs: { _i: 29 } },
+                                [
+                                  _c(
+                                    "v-uni-button",
+                                    {
+                                      staticClass: _vm._$g(30, "sc"),
+                                      attrs: { type: "default", _i: 30 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("取消")]
+                                  )
+                                ],
+                                1
                               )
                             ],
                             1
@@ -6264,140 +6345,48 @@ var render = function() {
               ),
               _c(
                 "v-uni-view",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm._$g(36, "v-show"),
-                      expression: "_$g(36,'v-show')"
-                    }
-                  ],
-                  staticClass: _vm._$g(36, "sc"),
-                  attrs: { _i: 36 }
-                },
+                { staticClass: _vm._$g(31, "sc"), attrs: { _i: 31 } },
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
+                    { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
                     [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
-                        [
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 39 } },
-                            [_vm._v("工学院")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 40 } },
-                            [_vm._v("理学院")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(41, "sc"), attrs: { _i: 41 } },
-                        [
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 42 } },
-                            [_vm._v("商学院")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 43 } },
-                            [_vm._v("法学院")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
-                        [
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 45 } },
-                            [_vm._v("医学院")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 46 } },
-                            [_vm._v("新闻学院")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
-                        [
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 48 } },
-                            [_vm._v("艺术学院")]
-                          ),
-                          _c(
-                            "v-uni-button",
-                            { attrs: { type: "default", _i: 49 } },
-                            [_vm._v("马克思院")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            { attrs: { _i: 51 } },
-                            [
-                              _c(
-                                "v-uni-button",
-                                {
-                                  staticClass: _vm._$g(52, "sc"),
-                                  attrs: { type: "default", _i: 52 },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$handleViewEvent($event)
-                                    }
-                                  }
-                                },
-                                [_vm._v("确认")]
-                              )
-                            ],
-                            1
-                          ),
-                          _c(
-                            "v-uni-view",
-                            { attrs: { _i: 53 } },
-                            [
-                              _c(
-                                "v-uni-button",
-                                {
-                                  staticClass: _vm._$g(54, "sc"),
-                                  attrs: { type: "default", _i: 54 },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$handleViewEvent($event)
-                                    }
-                                  }
-                                },
-                                [_vm._v("取消")]
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
+                      _c("v-uni-input", {
+                        attrs: {
+                          type: "text",
+                          value: "输入订阅内容关键词1",
+                          _i: 33
+                        },
+                        model: {
+                          value: _vm._$g(33, "v-model"),
+                          callback: function($$v) {
+                            _vm.$handleVModelEvent(33, $$v)
+                          },
+                          expression: "aSelectList"
+                        }
+                      })
                     ],
                     1
+                  )
+                ],
+                1
+              ),
+              _c(
+                "v-uni-navigator",
+                { attrs: { url: "./subscription", _i: 34 } },
+                [
+                  _c(
+                    "v-uni-button",
+                    {
+                      staticClass: _vm._$g(35, "sc"),
+                      attrs: { type: "default", _i: 35 },
+                      on: {
+                        click: function($event) {
+                          return _vm.$handleViewEvent($event)
+                        }
+                      }
+                    },
+                    [_vm._v("确定")]
                   )
                 ],
                 1
@@ -6406,60 +6395,22 @@ var render = function() {
             1
           ),
           _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(56, "sc"), attrs: { _i: 56 } },
-                [
-                  _c("v-uni-input", {
-                    attrs: {
-                      type: "text",
-                      value: "输入订阅内容关键词1",
-                      _i: 57
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-navigator",
-            { attrs: { url: "./subscription", _i: 58 } },
-            [
-              _c(
-                "v-uni-button",
-                {
-                  staticClass: _vm._$g(59, "sc"),
-                  attrs: { type: "default", _i: 59 }
-                },
-                [_vm._v("确定")]
-              )
-            ],
-            1
+            "v-uni-button",
+            {
+              staticClass: _vm._$g(36, "sc"),
+              attrs: { type: "default", _i: 36 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [_vm._v("返回上一页")]
           )
         ],
         1
-      ),
-      _c(
-        "v-uni-button",
-        {
-          staticClass: _vm._$g(60, "sc"),
-          attrs: { type: "default", _i: 60 },
-          on: {
-            click: function($event) {
-              return _vm.$handleViewEvent($event)
-            }
-          }
-        },
-        [_vm._v("返回上一页")]
       )
-    ],
-    1
-  )
+    : _vm._e()
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -6549,7 +6500,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ./node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.title[data-v-41a2d76f]{\n\tpadding-top: 30px;\n\tpadding-left: 40px;\n\tfont-size: 24px;\n\tcolor: white;\n}\n.content[data-v-41a2d76f] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\tjustify-content: center;\n}\n.background[data-v-41a2d76f]{\n\twidth: 100%;\n\theight: 1300px;\n\tposition: absolute;\n}\n/* 输入框 */\n.input_box[data-v-41a2d76f]{\n\tdisplay: flex;\n\tflex-direction:column;\n\talign-items: center;\n\tvertical-align: middle;\n\tmargin-top: 30px;\n}\n.inside[data-v-41a2d76f]{\n\t\t /* margin: 30 auto; */\n\tmargin: 15px;\n\t\n\ttext-align:center; \n\twidth:266px ;\n\theight: 50px;\n\tbackground:rgba(209, 213, 229, 0.7);\n\tborder-radius: 40px;\n\tcolor: #696969;\t\n\tfont-size: 30px;\n\tbox-shadow: 0 0 10px #4d4d4d;\n}\n.inside uni-input[data-v-41a2d76f]{\n\t\tmargin-top: 13px;\n}\n.inside[data-v-41a2d76f]:hover{\n\t\n\tborder: 4px solid #b67fca;\n}\n/* 弹窗 */\n.popup-info[data-v-41a2d76f]{\n\tposition: fixed;\n\twidth: 550upx;\n\ttop: 50%;\n\tleft: 50%;\n\tbox-shadow:0 0 3px #b67fca;\n\t-webkit-transform: translate(-50%,-50%);\n\t        transform: translate(-50%,-50%);\n\tfont-size: 30upx;\n\tpadding: 40upx;\n\tborder-radius: 50upx;\n\t/* background:rgba(209, 213, 229, 0.9); */\n\tbackground:rgba(45,45,45,0.94);\n\tz-index: 9999;\n\tdisplay: flex;\n\tjustify-content: center;\n\tflex-direction:column;\n}\n.popup-info .row[data-v-41a2d76f]{\n\tdisplay: flex;\n\tjustify-content: center;\n\tflex-direction:row;\n}\n.popup-info uni-button[data-v-41a2d76f]{\n\n\tmargin: 10px;\n\twidth: 100px;\n\tbackground-color:  rgba(116,50,140,0.3);\n\tcolor: white;\n}\n/* 弹窗内部按钮动画 */\n.popup-info uni-button[data-v-41a2d76f]::before{\n  position: absolute;\n  content: '';\n  left: -3em;\n  right: -7em;\n  top: 1em;\n  bottom: -2em;\n  pointer-events: none;\n  background-repeat: no-repeat;\n  background-image: radial-gradient(circle,#f8caff 20%, transparent 0),\n  radial-gradient(circle, #f8caff 20%, transparent 0),\n  radial-gradient(circle, #f8caff 20%, transparent 0),\n  radial-gradient(circle, #f8caff 20%, transparent 0);\n  background-size: 10% 10%, 20% 20%, 15% 15%;\n  background-position: 18% 40%, 20% 31%, 30% 30%;\n}\n.popup-info uni-button[data-v-41a2d76f]::before{\n  -webkit-animation: bubbles-data-v-41a2d76f ease-in-out .75s forwards;\n          animation: bubbles-data-v-41a2d76f ease-in-out .75s forwards;\n}\n.popup-info uni-button[data-v-41a2d76f]:active::before {\n  -webkit-animation: none;\n          animation: none; /*这里注意取消动画*/\n  background-size: 0;\n}\n@-webkit-keyframes bubbles-data-v-41a2d76f {\n0% {\n    background-position: 18% 40%, ...;\n}\n50% {\n    background-position: 10% 44%, ...;\n}\n100% {\n    background-position: 5% 44%, ...;\n    background-size: 0% 0%;\n}\n}\n@keyframes bubbles-data-v-41a2d76f {\n0% {\n    background-position: 18% 40%, ...;\n}\n50% {\n    background-position: 10% 44%, ...;\n}\n100% {\n    background-position: 5% 44%, ...;\n    background-size: 0% 0%;\n}\n}\n.popup-info uni-button[data-v-41a2d76f]:hover{\n\n\tmargin: 10px;\n\twidth: 100px;\n\tbackground-color:  rgba(116,50,140,1);\n\tcolor: white;\n}\n.popup-info .popup-btn[data-v-41a2d76f]{\n\t\n\tdisplay: flex;\n\tjustify-content: center;\n\tflex-direction:row;\n}\n.popup-info .popup-btn uni-button[data-v-41a2d76f]{\n\twidth: 75px;\n\tborder-radius: 50px;\n}\n/* 确定按钮 */\n.ok[data-v-41a2d76f]{\n\tmargin-top: 70px;\n\twidth:266px ;\n\theight: 50px;\n\tbackground-color: #74328c;\n\tborder-radius: 40px;\n\tcolor: white;\n\tbox-shadow: 0 0 10px #4d4d4d;\n}\n/* 订阅选择样式 */\n.choice_content[data-v-41a2d76f]{\n\tmargin: 20px;\n\twidth: 210px;\n\t/* border: 5px solid   #a034ca; */\n\tpadding: 10px;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n.choice_item uni-button[data-v-41a2d76f]{\n\tmargin: 10px;\n\twidth: 100px;\n\tbackground: transparent  ;\n\tcolor:  white;\n}\n.choice_item uni-button[data-v-41a2d76f]:hover{\n\tbackground:  #872bab;\n\tcolor:white;\n\tbox-shadow: 0 0 5px #a034ca,\n\t            0 0 25px #774e98,\n\t            0 0 50px #774e98,\n\t            0 0 200px #774e98;\n\t /* -webkit-box-reflect:below 10px linear-gradient(transparent, #0005); */\n}\n/* 按钮冒泡效果样式 */\n.bubble[data-v-41a2d76f] {\n\t\tposition: relative;\n\t\toverflow: hidden;\n}\n.bubble[data-v-41a2d76f]::after{\n\t\tcontent: \"44444\";\n\t\tbackground: #f8caff;\n\t\tposition: absolute;\n\t\twidth: 750rpx;\n\t\theight: 750rpx;\n\t\tleft: calc(50% - 375rpx);\n\t\ttop: calc(50% - 375rpx);\n\t\topacity: 0;\n\t\tmargin: auto;\n\t\tborder-radius: 50%;\n\t\t-webkit-transform: scale(1);\n\t\t        transform: scale(1);\n\t\ttransition: all 1s ease-in-out;\n}\n.bubble[data-v-41a2d76f]:active:after {\n\t\t-webkit-transform: scale(0);\n\t\t        transform: scale(0);\n\t\topacity: 1;\n\t\ttransition: 0s;\n}\n/* 返回上一页按钮 */\n.button[data-v-41a2d76f]{\n\tposition: fixed;\n\tz-index: 2;\n\tbottom: 0;\n\twidth: 100%;\n\theight: 120rpx;\n\tcolor: white;\n\tpadding: 10rpx;\n\tfont-size: 40rpx;\n\tbackground-color: rgba(158,69,189,0.6);\n}\n", ""]);
+exports.push([module.i, "\n.title[data-v-41a2d76f]{\n\tpadding-top: 30px;\n\tpadding-left: 40px;\n\tfont-size: 24px;\n\tcolor: white;\n}\n.content[data-v-41a2d76f] {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\tjustify-content: center;\n}\n.background[data-v-41a2d76f]{\n\twidth: 100%;\n\theight: 1300px;\n\tposition: absolute;\n}\n/* 输入框 */\n.input_box[data-v-41a2d76f]{\n\tdisplay: flex;\n\tflex-direction:column;\n\talign-items: center;\n\tvertical-align: middle;\n\tmargin-top: 30px;\n}\n.inside[data-v-41a2d76f]{\n\t\t /* margin: 30 auto; */\n\tmargin: 15px;\n\t\n\ttext-align:center; \n\twidth:266px ;\n\theight: 50px;\n\tbackground:rgba(209, 213, 229, 0.7);\n\tborder-radius: 40px;\n\tcolor: #696969;\t\n\tfont-size: 30px;\n\tbox-shadow: 0 0 10px #4d4d4d;\n}\n.inside uni-input[data-v-41a2d76f]{\n\t\tmargin-top: 13px;\n}\n.inside[data-v-41a2d76f]:hover{\n\t\n\tborder: 4px solid #b67fca;\n}\n/* 弹窗 */\n.popup-info[data-v-41a2d76f]{\n\tposition: fixed;\n\twidth: 550upx;\n\ttop: 50%;\n\tleft: 50%;\n\tbox-shadow:0 0 3px #b67fca;\n\t-webkit-transform: translate(-50%,-50%);\n\t        transform: translate(-50%,-50%);\n\tfont-size: 30upx;\n\tpadding: 40upx;\n\tborder-radius: 50upx;\n\t/* background:rgba(209, 213, 229, 0.9); */\n\tbackground:rgba(45,45,45,0.94);\n\tz-index: 9999;\n\tdisplay: flex;\n\tjustify-content: center;\n\tflex-direction:column;\n}\n.popup-info .row[data-v-41a2d76f]{\n\tdisplay: flex;\n\tjustify-content: center;\n\tflex-direction:row;\n\tflex-wrap: wrap;\n}\n.popup-info uni-button[data-v-41a2d76f]{\n\n\tmargin: 10px;\n\twidth: 100px;\n\tbackground-color:  rgba(116,50,140,0.3);\n\tcolor: white;\n}\n/* 弹窗内部按钮动画 */\n.popup-info uni-button[data-v-41a2d76f]::before{\n  position: absolute;\n  content: '';\n  left: -3em;\n  right: -7em;\n  top: 1em;\n  bottom: -2em;\n  pointer-events: none;\n  background-repeat: no-repeat;\n  background-image: radial-gradient(circle,#f8caff 20%, transparent 0),\n  radial-gradient(circle, #f8caff 20%, transparent 0),\n  radial-gradient(circle, #f8caff 20%, transparent 0),\n  radial-gradient(circle, #f8caff 20%, transparent 0);\n  background-size: 10% 10%, 20% 20%, 15% 15%;\n  background-position: 18% 40%, 20% 31%, 30% 30%;\n}\n.popup-info uni-button[data-v-41a2d76f]::before{\n  -webkit-animation: bubbles-data-v-41a2d76f ease-in-out .75s forwards;\n          animation: bubbles-data-v-41a2d76f ease-in-out .75s forwards;\n}\n.popup-info uni-button[data-v-41a2d76f]:active::before {\n  -webkit-animation: none;\n          animation: none; /*这里注意取消动画*/\n  background-size: 0;\n}\n@-webkit-keyframes bubbles-data-v-41a2d76f {\n0% {\n    background-position: 18% 40%, ...;\n}\n50% {\n    background-position: 10% 44%, ...;\n}\n100% {\n    background-position: 5% 44%, ...;\n    background-size: 0% 0%;\n}\n}\n@keyframes bubbles-data-v-41a2d76f {\n0% {\n    background-position: 18% 40%, ...;\n}\n50% {\n    background-position: 10% 44%, ...;\n}\n100% {\n    background-position: 5% 44%, ...;\n    background-size: 0% 0%;\n}\n}\n.popup-info uni-button[data-v-41a2d76f]:hover{\n\n\tmargin: 10px;\n\twidth: 100px;\n\tbackground-color:  rgba(116,50,140,1);\n\tcolor: white;\n}\n.popup-info .popup-btn[data-v-41a2d76f]{\n\t\n\tdisplay: flex;\n\tjustify-content: center;\n\tflex-direction:row;\n}\n.popup-info .popup-btn uni-button[data-v-41a2d76f]{\n\twidth: 75px;\n\tborder-radius: 50px;\n}\n/* 确定按钮 */\n.ok[data-v-41a2d76f]{\n\tmargin-top: 70px;\n\twidth:266px ;\n\theight: 50px;\n\tbackground-color: #74328c;\n\tborder-radius: 40px;\n\tcolor: white;\n\tbox-shadow: 0 0 10px #4d4d4d;\n}\n/* 订阅选择样式 */\n.choice_content[data-v-41a2d76f]{\n\tmargin: 20px;\n\twidth: 210px;\n\t/* border: 5px solid   #a034ca; */\n\tpadding: 10px;\n\tdisplay: flex;\n\tjustify-content: center;\n}\n.choice_item uni-button[data-v-41a2d76f]{\n\tmargin: 10px;\n\twidth: 100px;\n\tbackground: transparent  ;\n\tcolor:  white;\n}\n.choice_item uni-button[data-v-41a2d76f]:hover{\n\tbackground:  #872bab;\n\tcolor:white;\n\tbox-shadow: 0 0 5px #a034ca,\n\t            0 0 25px #774e98,\n\t            0 0 50px #774e98,\n\t            0 0 200px #774e98;\n\t /* -webkit-box-reflect:below 10px linear-gradient(transparent, #0005); */\n}\n/* 按钮冒泡效果样式 */\n.bubble[data-v-41a2d76f] {\n\t\tposition: relative;\n\t\toverflow: hidden;\n}\n.bubble[data-v-41a2d76f]::after{\n\t\tcontent: \"44444\";\n\t\tbackground: #f8caff;\n\t\tposition: absolute;\n\t\twidth: 750rpx;\n\t\theight: 750rpx;\n\t\tleft: calc(50% - 375rpx);\n\t\ttop: calc(50% - 375rpx);\n\t\topacity: 0;\n\t\tmargin: auto;\n\t\tborder-radius: 50%;\n\t\t-webkit-transform: scale(1);\n\t\t        transform: scale(1);\n\t\ttransition: all 1s ease-in-out;\n}\n.bubble[data-v-41a2d76f]:active:after {\n\t\t-webkit-transform: scale(0);\n\t\t        transform: scale(0);\n\t\topacity: 1;\n\t\ttransition: 0s;\n}\n/* 返回上一页按钮 */\n.button[data-v-41a2d76f]{\n\tposition: fixed;\n\tz-index: 2;\n\tbottom: 0;\n\twidth: 100%;\n\theight: 120rpx;\n\tcolor: white;\n\tpadding: 10rpx;\n\tfont-size: 40rpx;\n\tbackground-color: rgba(158,69,189,0.6);\n}\n.label_in[data-v-41a2d76f]{\n\tmargin-top: 16rpx;\n\twidth: 410rpx;\n\theight: 150rpx;\n\tdisplay: flex;\n\tflex-direction: raw;\n\tflex-wrap: wrap;\n\talign-items: center;\n\tjustify-content: center;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
