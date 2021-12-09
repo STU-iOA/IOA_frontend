@@ -21,8 +21,8 @@
 					<view class="oaText" >
 						<view @tap="forDetail(index,$event)">
 						<view class="oaTitle" >
-							<text>OA</text>
-							<text>{{oaList[index].id}}</text>
+							<!-- <text>OA</text> -->
+							<text>{{oaList[index].title}}</text>
 						</view>
 						<view><text>{{oaList[index].title}}</text></view>
 						</view>
@@ -57,7 +57,6 @@
 									<text>{{oaList[index].favoredCount}}</text>
 									<text>人已收藏</text>
 								</view>		
-								<!-- <text>1234 人已阅 | 700人已收藏</text> -->
 							</view>
 							<view class="time"><text>{{oaList[index].timestamp}}</text></view>
 						</view>
@@ -85,8 +84,8 @@
 				<view class="oaText">
 					<view  @tap="forDetail(index,$event)">
 					<view class="oaTitle" >
-						<text>OA</text>
-						<text>{{oaSubList[index].id}}</text>
+						<!-- <text>OA</text> -->
+						<text>{{oaSubList[index].title}}</text>
 					</view>
 					<view><text>{{oaSubList[index].title}}</text></view>
 					</view>
@@ -151,7 +150,8 @@
 				// token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
 				token:"",
 				isDeleteCode:0,
-				// page:0,
+				page:1,
+				pageCount:0,
 				src1:"../../../../static/Me/myPage/good.png",
 				src2:"../../../../static/Me/myPage/cancelGood.png",
 				oaList:[
@@ -166,20 +166,26 @@
 					}
 				],
 				oaSubList:[],
-				surbscribes:[]
-				
+				oaSubListTest:[],
+				surbscribes:[]				
 			}
 		},
-		onLoad() {
+		onShow() {
 			this.getToken();
 			this.getSubDepart();
-			// this.getOaFavorites(this.token,this.page,2);
-			this.getOaFavorites(this.token,1,20);
+			// this.isEnd(this.token,1,10000);
+			// this.getOaFavorites(this.token,this.page,3);
 		},
-		// onReachBottom() {
-		// 	this.page++;
-		// 	this.getOaFavorites(this.token,this.page,2);
-		// 		},
+		//下拉到最下面换页
+		onReachBottom() {	
+			if(this.pageCount>2){
+				console.log(this.pageCount);
+				this.page++;
+				this.getOaFavorites(this.token,this.page,7);
+				console.log(this.page);
+				this.pageCount--;
+			}
+				},
 		methods:{
 			//获取缓存的用户token
 			getToken(){
@@ -188,12 +194,12 @@
 				uni.getStorage({
 					key:'token',
 					success: function(res) {
-						token = res.data;
-						// that.getOaFavorites(this.token,1,20);
+						token=res.data;
+						that.isEnd(token,1,10000);
+						that.getOaFavorites(token,that.page,7);
 					}					
 				});
 				this.token=token;
-				// console.log(this.token);
 			},
 			//获取缓存的用户订阅词
 			getSubDepart(){
@@ -210,30 +216,30 @@
 				console.log(this.keywords[0]);
 			},
 			// 按照订阅分类
-			classifyBySub:function(e,index){				
-					var indexindex = e.target.dataset.index;				
+			classifyBySub:function(e,index){
+					this.surbscribes=[];
+					// var indexindex = e.target.dataset.index;				
 					var items = this.keywords;
 					console.log(items[index]);
-					for (let i = 0; i < this.oaCount; i++) { 
-					    if(items[index]==this.oaList[i].subcompanyName){
+					//根据收藏的OA，匹配订阅的部门
+					for (let i = 0; i < this.oaCount; i++) {
+						console.log(this.oaSubListTest[i].subcompanyName);
+					    if(items[index]==this.oaSubListTest[i].subcompanyName){
 							this.surbscribes.push(i);
 						}
 					 }
-					 console.log(this.surbscribes[0]);
-					 var oaSubList=[]
+					 console.log(this.surbscribes[0]);				 
 					 for(let i = 0; i < this.surbscribes.length; i++){
-						 var index=this.surbscribes[i];
-						 
-						 oaSubList.push(this.oaSubList[index]);
+						 var oaSubList=[];
+						 var index=this.surbscribes[i];						 
+						 oaSubList.push(this.oaSubListTest[index]);
 					 }
-					 this.oaSubList=oaSubList;
-					 console.log(this.oaSubList);
-					
+					 this.oaSubList=oaSubList;					
 			},
 			goBack(){
 				uni.navigateBack({
 					//改用navigateBack返回上一页 ljs
-					delta:1
+					// delta:1
 					// url:'../../level1/myPages/myPages'
 				})
 			},
@@ -282,11 +288,55 @@
 				return getOaFavorites(token,page,size).then(
 				(res) => {
 					console.log("ok");
-					this.oaCount=res.data.data.oaDtoList.length;
+					// this.oaCount=res.data.data.oaDtoList.length;
 					this.oaList=res.data.data.oaDtoList;	
-					this.oaSubList=res.data.data.oaDtoList;
-					this.surbscribe=this.oaSubList.subcompanyName;
+					// this.oaSubList=res.data.data.oaDtoList;
+					// this.surbscribe=this.oaSubList.subcompanyName;				
 					// console.log(this.oaList[0].id)
+					console.log(this.oaList);
+					//时间戳格式					
+					for(let i=0;i<this.oaList.length;i++){
+						if(this.oaList[i].timestamp!=null){
+							var timestamp=this.oaList[i].timestamp;
+							// console.log(timestamp);
+							timestamp=timestamp.slice(0,10);
+							// console.log(timestamp);
+							this.oaList[i].timestamp=timestamp;
+						}
+					}				
+					},
+				(err) => {
+				  console.log(err);
+				}
+				);
+			},
+			//OA是否展示完
+			isEnd(token,page,size){
+				return getOaFavorites(token,page,size).then(
+				(res) => {
+					console.log("ok");
+					this.oaCount=res.data.data.oaDtoList.length;
+					this.oaSubList=res.data.data.oaDtoList;
+					this.oaSubListTest=res.data.data.oaDtoList;
+					// console.log(this.oaSubList);
+					this.surbscribe=this.oaSubList.subcompanyName;	
+					if(this.oaCount%3==0){
+						this.pageCount=this.oaCount/3;
+					}
+					else{
+						this.pageCount=this.oaCount/3+1;
+					}
+					//时间戳格式
+					for(let i=0;i<this.oaSubList.length;i++){
+						if(this.oaSubList[i].timestamp!=null){
+							var timestamp=this.oaSubList[i].timestamp;
+							// console.log(timestamp);
+							timestamp=timestamp.slice(0,10);
+							// console.log(timestamp);
+							this.oaSubList[i].timestamp=timestamp;
+						}
+					}	
+					
 					},
 				(err) => {
 				  console.log(err);
@@ -442,6 +492,7 @@
 		margin-left: 40rpx;
 		padding-top: 20rpx;
 		color: #666666;
+		padding-right:20rpx;
 	}
 	.oaTitle{
 		color: black;
