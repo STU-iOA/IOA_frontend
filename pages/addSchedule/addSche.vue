@@ -43,13 +43,13 @@
 					<view class="mTips">
 						<text>内容</text>
 					</view>
-					<textarea class="textarea" placeholder="输入内容" v-model="eventInfo.detail" :value="eventInfo.detail" />
+					<textarea class="textarea" placeholder="输入内容" v-model="eventInfo.detail" :name="eventInfo.detail" />
 				</view>
 				<view class="inputSumup">
 					<view class="mTips">
 						<text>总结</text>
 					</view>
-					<input class="uni-input" maxlength="9" placeholder="最大输入长度为 9" v-model="eventInfo.sumup" :value="eventInfo.sumup" />
+					<input class="uni-input" maxlength="9" placeholder="最大输入长度为 9" v-model="eventInfo.sumup" :name="eventInfo.sumup" />
 				</view>
 				<view class="inputSubmit">
 					<button class="inputSubmitBtn" type="default" @click="submitEvent">提交</button>
