@@ -13,11 +13,6 @@
 			<view class="row">
 				<view class="choice_item">
 					<button type="default" @tap="tapPopup">学院</button>
-
-				</view>
-				<view class="choice_item">
-					<button type="default" v-for="(item,index) in jiangjin"  :class="{'labelTag': rSelectjiangjin.indexOf(index)!=-1}" @click="aClickjiangjin(index)">奖学金</button>
-
 				</view>
 				<!-- <view class="choice_item">
 					<button type="default" v-for="(item,index) in jiangjin"  :class="{'labelTag': rSelectjiangjin.indexOf(index)!=-1}" @click="aClickjiangjin(index)">奖学金</button>
@@ -27,11 +22,6 @@
 			<view class="row">
 				<view class="choice_item">
 					<button type="default"  @tap="tapPopup2">书院</button>
-
-				</view>
-				<view class="choice_item">
-					<button type="default"  v-for="(item,index) in jingsai"  :class="{'labelTag': rSelectjingsai.indexOf(index)!=-1}" @click="aClickjingsai(index)">竞赛</button>
-
 				</view>
 				<!-- <view class="choice_item">
 					<button type="default"  v-for="(item,index) in jingsai"  :class="{'labelTag': rSelectjingsai.indexOf(index)!=-1}" @click="aClickjingsai(index)">竞赛</button>
@@ -105,11 +95,9 @@
 					rSelectjiangjin:[],
 					rSelectjingsai:[],
 					aSelectList:[],
-
 					  
 					  isRouterAlive: true,
 					  
-
 					shuyuan:['德馨书院','淑德书院','敬一书院','修远书院','明德书院','弘毅书院','思源书院','知行书院','至诚书院'],
 					xveyuan:['工学院','理学院','文学院','商学院','法学院','马克思主义学院','长江艺术与设计学院','长江新闻与传播学院'],
 					jiangjin:['奖学金'],
@@ -119,9 +107,7 @@
 	
 		
 		onLoad() {
-
 			  // this.reload();
-
 		},
 		methods: {
 				// 弹窗
@@ -147,13 +133,11 @@
 							this.aSelectList.push(this.xveyuan[index]);
 						}
 					},
-
 					reload () {
 					      this.isRouterAlive = false
 					      this.$nextTick(function () {
 					        this.isRouterAlive = true
 					      })},
-
 					aClickShu(index) {
 						 let arrIndex = this.rSelectShu.indexOf(index);
 						if(arrIndex>-1){
@@ -168,7 +152,6 @@
 							this.aSelectList.push(this.shuyuan[index]);
 						}
 					},
-
 					// aClickjiangjin(index) {
 					// 	 let arrIndex = this.rSelectjiangjin.indexOf(index);
 					// 	if(arrIndex>-1){
@@ -197,7 +180,6 @@
 					// 		this.aSelectList.push(this.jingsai[index]);
 					// 	}
 					// },
-
 					// 点击弹窗确认
 					affirm() { 
 						this.show = false;
@@ -211,6 +193,7 @@
 									}
 								});});
 						
+					
 					},
 					// 弹窗
 						tapPopup2() {
