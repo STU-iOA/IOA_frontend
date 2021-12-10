@@ -7,11 +7,11 @@
 				<view class="scrollstick" :class="{'selectOA':selectOA, 'selectSbc':selectSbc}"></view>
 			</view>
 			<view class="inputBox">
-				<input type="text" placeholder=" 搜索" placeholder-class="iconfont icon-sousuo"/>
+				<input type="text" placeholder=" 搜索" v-model="resetValue" placeholder-class="iconfont icon-sousuo" confirm-type="search" @confirm="search"/>
 			</view>
 		</view>
 		<view>
-			<OAItemList :selectedCard="selectedNum"></OAItemList>
+			<OAItemList :selectedCard="selectedNum" :searchValue="searchValue" @resetInput="resetValue=''"></OAItemList>
 		</view>
 	</view>
 </template>
@@ -25,7 +25,9 @@
 				selectOA:true,		  //OA选项卡被选中的时候下划线位置
 				selectSbc:false,      //订阅选项卡被选中的时候下划线位置
 				tabColor_ed:true,     //OA或者订阅选项卡被选中时候字体颜色
-				selectedNum: 1        ,//OA或者订阅选项卡被选中时候对应的编号，1为OA，2为订阅
+				selectedNum: 1,        //OA或者订阅选项卡被选中时候对应的编号，1为OA，2为订阅
+				searchValue:'',      //搜索关键词
+				resetValue:''
 			}
 		},
 		onLoad(){
@@ -52,6 +54,19 @@
 					console.log(2)
 				}
 				
+			},
+			search(event){
+				console.log(event);
+				if(event.detail.value!=''){  //搜索内容不为空
+					this.searchValue=event.detail.value;
+				}
+				else{
+					uni.showToast({
+						title:"搜索内容不为空",
+						icon:"error",
+						duration:2000
+					})
+				}
 			}
 		}
 	}

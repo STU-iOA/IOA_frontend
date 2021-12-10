@@ -150,13 +150,13 @@
 			"selectedIconPath":"static/tabs/active.png"
 		
 		}]
+	},
+	"condition":{ //启动模式配置 仅在开发模式生效，用于直达页面的目的
+		"current":0, //当前激活的模式 list索引
+		"list":[{ //启动模式列表
+			"name":"登录页", //启动模式名称
+			"path":"pages/index/index", //路径
+			"query":"id=80"} //启动参数，可在页面onLoad函数获得
+		]
 	}
-	// "condition":{ //启动模式配置 仅在开发模式生效，用于直达页面的目的
-	// 	"current":0, //当前激活的模式 list索引
-	// 	"list":[{ //启动模式列表
-	// 		"name":"详情页", //启动模式名称
-	// 		"path":"pages/OA/OADetail/OADetail", //路径
-	// 		"query":"id=80"} //启动参数，可在页面onLoad函数获得
-	// 	]
-	// }
 }
