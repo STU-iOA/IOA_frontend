@@ -24,7 +24,7 @@
 							<!-- <text>OA</text> -->
 							<text>{{oaList[index].title}}</text>
 						</view>
-						<view><text>{{oaList[index].title}}</text></view>
+						<view><text>{{oaList[index].keyText}}</text></view>
 						</view>
 						<!-- 关键词 -->
 						<view class="keywords">
@@ -87,7 +87,7 @@
 						<!-- <text>OA</text> -->
 						<text>{{oaSubList[index].title}}</text>
 					</view>
-					<view><text>{{oaSubList[index].title}}</text></view>
+					<view><text>{{oaSubList[index].keyText}}</text></view>
 					</view>
 					<!-- 关键词 -->
 					<view class="keywords">
@@ -144,7 +144,7 @@
 				oaCount:0,
 				showUpImg:true,
 				currentIndex: -1,
-				array:["新闻学院","知行书院","荧光夜跑"],
+				array:[],
 				// keywords:["新闻学院","知行书院","明德书院","德馨书院","工学院"],
 				keywords:[],
 				// token:"378fd578-4088-44a5-92e9-7921d4a24a6b",
@@ -162,7 +162,8 @@
 						subcompanyName:"教务处",
 						keywords:"",
 						favoredCount:1,
-						readCount:0						
+						readCount:0,
+						keyText:""
 					}
 				],
 				oaSubList:[],
@@ -296,6 +297,13 @@
 					console.log(this.oaList);
 					//时间戳格式					
 					for(let i=0;i<this.oaList.length;i++){
+						if(this.oaList[i].keywords!=""){
+							var keyword=this.oaList[i].keywords;
+							// var keyword="哈哈;嘻嘻"
+							keyword=keyword.split(";");
+							this.array=keyword;
+							console.log(this.array[1]);
+						}
 						if(this.oaList[i].timestamp!=null){
 							var timestamp=this.oaList[i].timestamp;
 							// console.log(timestamp);
