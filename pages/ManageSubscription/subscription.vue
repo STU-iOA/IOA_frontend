@@ -10,7 +10,7 @@
 		<view class="content">
 		<!-- 标签开始 -->
 				  <view class="label_box"> 
-					<view class="box_inside" v-for="(item,index) in keywords" :key="index"  v-if="isRouterAlive"> 
+					<view class="box_inside" v-for="(item,index) in keywords" :key="index" > 
 					<image src="../../static/lsy/close.png" v-show="isShow"  mode=""></image>
 						<image src="../../static/lsy/flower.png" mode="" @click="deletekeyword(index)"></image>
 						<view class="text_item">
@@ -156,6 +156,9 @@
 	align-items: center;
 	vertical-align: middle;
 	
+	}
+	.text_item:active{
+		color: #007AFF;
 	}
 	.box_inside:active{
 		transform: scale(1.5) ;
