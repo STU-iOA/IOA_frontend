@@ -610,6 +610,7 @@
 						fail(err){
 							uni.showToast({
 								title:"搜索失败",
+								icon:"error",
 								duration:2000
 							})
 							that.noContent=true;
