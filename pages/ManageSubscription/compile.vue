@@ -154,10 +154,10 @@
 					affirm() { 
 						this.show = false;
 						this.show2=false;
-						let arrIndex = this.rSelectXve.indexOf(this.listIndex);
+						let arrIndex = this.rSelectXve.indexOf(this.listIndex);//获取目标所选关键词索引
 						// console.log(arrIndex);
 						if(arrIndex>-1){
-							this.rSelectXve.splice(arrIndex,1);
+							this.rSelectXve.splice(arrIndex,1);//获取单个关键词【应对另选中其它按钮后更改数组的情况】
 							for (let i = 0 ; i<this.aSelectList.length ; i++){
 								if(this.xveyuan[this.listIndex] == this.aSelectList[i]){
 									this.aSelectList.splice(i,1);
@@ -166,23 +166,20 @@
 							
 						}else{
 							console.log(this.aSelectList)
-							// 判断所选订阅词是否重复
+							// 判断所选订阅词是否重复【应对重复选中已订阅词情况】
 							for(let j=0;j<this.keywords.length;j++){
 							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								//将新增订阅词数组与本地缓存的订阅词相比较，若相同，则删除对应新增订阅词，避免重复添加
 								if(this.keywords[j] == this.aSelectList[i]){
 									this.aSelectList.splice(i,1);
 								}
 								
 							}};
 							this.rSelectXve.push(this.listIndex);
-							// appendLength=this.aSelectList.length+this.listIndex;
+							//将最终绝对添加的数组push进新数组【后续会将此数组进行拼接后，放入本地缓存】
 							this.aSelectList.push(this.xveyuan[this.listIndex]);
 							console.log(this.aSelectList);
 						}
-							
-						
-				
-					
 					},
 					shuAffirm(){
 						this.show = false;
@@ -201,11 +198,13 @@
 						
 						}
 						// console.log(this.aSelectList);
-						this.allList=this.keywords.concat(this.aSelectList,this.aSelectList2);
+						
 						console.log(this.allList);
 						
 					},
 					allAffirm(){
+						// 将书院与学院最终确定添加的订阅词进行追加拼接存入本地缓存
+						this.allList=this.keywords.concat(this.aSelectList,this.aSelectList2);
 						new Promise((resolve,reject)=>{
 								uni.setStorage({
 									key:"subDepart",

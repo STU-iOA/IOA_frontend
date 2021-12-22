@@ -65,9 +65,6 @@
 	 onShow() {
 
 			this.getSubDepart();
-			
-			// this.reload()
-			// this.reloadPage(); 
 		},
 		methods: {
 			showToggle(){
