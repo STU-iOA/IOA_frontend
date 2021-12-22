@@ -62,7 +62,7 @@
 		},
 	
 		
-		onLoad() {
+	 onShow() {
 
 			this.getSubDepart();
 			
