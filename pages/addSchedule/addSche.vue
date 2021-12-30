@@ -66,8 +66,6 @@
 	  return {
 		  //添加日程数据：token，content，conclusion
 		  addDailyUrl: 'http://119.23.222.86:8890/daily/add-to-daily',
-		  //删除某条日程数据：dailyId
-		  deleteDailyUrl: 'http://localhost:8890/daily/remove-from-daily',
 		  eventDate:'',
 		  eventInfo:{
 			  //创建日期：保留，不知道是否必要
@@ -103,11 +101,12 @@
 		  */
 		 updateTime(){
 			 this.eventInfo.deadline = String(this.eventDate)
-			 this.eventInfo.ddl_day=this.eventInfo.deadline.substring(0,9)
+			 this.eventInfo.ddl_day=this.eventInfo.deadline.substring(0,10)
 			 this.eventInfo.ddl_time=this.eventInfo.deadline.substring(11,19)
 		 },
 		 submitData(){
-			this.getDaily(this.token,this.eventInfo.detail,this.eventInfo.sumup)
+			let ddl = String(this.eventDate).replace(' ','T')
+			this.getDaily(this.token,this.eventInfo.detail,this.eventInfo.sumup,ddl)
 			
 			console.log('提交成功！')
 			console.log(this.eventDate)
@@ -166,7 +165,7 @@
 		  	return that.token
 		  },
 		  //提交日程
-		  getDaily(token_,content_,conclusion_){
+		  getDaily(token_,content_,conclusion_,ddl_){
 		  	let that = this;
 		  		uni.request({
 		  			url:this.addDailyUrl,
@@ -175,20 +174,35 @@
 		  				token: token_,
 						content:content_,
 						conclusion:conclusion_,
+						date:ddl_,
 		  			},
 		  			success: (res) => {
-		  				console.log(token_)
-						console.log(content_)
-						console.log(conclusion_)
-						console.log(res)
-						
-		  				//提交成功后 重置页面的变量信息
-		  				Object.assign(this.$data, this.$options.data())
+						if(res.statusCode==200){
+							console.log(token_)
+							console.log(content_)
+							console.log(conclusion_)
+							console.log(ddl_)
+							console.log(res)
+							
+							//提交成功后 重置页面的变量信息
+							Object.assign(this.$data, this.$options.data())
+							
+							//提交成功后 由于是tabSwitch  所以采用特别的跳转方式 ljs
+							uni.switchTab({
+							    url: '/pages/schedule/schedule'
+							});
+						}else{
+							console.log(token_)
+							console.log(content_)
+							console.log(conclusion_)
+							console.log(ddl_)
+							uni.showModal({
+								showCancel:false,
+								title: '提示',
+								content: '提交失败！',
+							})
+						}
 		  				
-		  				//提交成功后 由于是tabSwitch  所以采用特别的跳转方式 ljs
-		  				uni.switchTab({
-		  				    url: '/pages/schedule/schedule'
-		  				});
 		  			},
 		  			fail: (err) => {
 		  				console.log(err)

@@ -69,7 +69,7 @@
 						<view class="eventTime">
 							{{event.time}}
 						</view>
-						<view class="eventTitle">
+						<view class="eventTitle" @click = 'enterDetail(index,$event)' >
 							{{event.title}}
 						</view>
 						<view class="eventState">
@@ -94,7 +94,7 @@
 		//获取用户日程数据:参数token
 		getDailyUrl: 'http://119.23.222.86:8890/daily/list',
 		//对某条数据check：dailyId
-		checkDailyUrl: 'http://localhost:8890/daily/check',
+		checkDailyUrl: 'http://119.23.222.86:8890/daily/check',
 		
 		//用户的token
 		token:'',
@@ -286,6 +286,20 @@
 			// 根据用户点击的日程id 搜索数组，找到对应的item的数组下标
 			this.todayList[index].checkState = !(this.todayList[index].checkState)
 			this.updateState()
+			let that = this;
+				uni.request({
+					url:this.checkDailyUrl,
+					method:'GET',
+					data:{
+						dailyId:id
+					},
+					success: (res) => {
+						console.log(String(id)+'已经check')
+					},
+					fail: (err) => {
+						console.log(err)
+					}
+				})
 		},
 		
 		//日历
@@ -408,6 +422,8 @@
 					timestamp:1635474766840,
 					//标题最长8个字？
 					title:'可添加今日日程',
+					//详情
+					detail:'',
 					//时间状态，即该事件的时间是否过去
 					timeState:true,
 					//图标路径，默认为 go.png
@@ -420,6 +436,8 @@
 					ones.id = this.dailyList[i].dailyId
 					ones.timestamp = this.dailyList[i].timesTamp
 					ones.title = this.dailyList[i].conclusion
+					ones.detail = this.dailyList[i].content
+					ones.checkState = this.dailyList[i].ifComplete ? true : false
 					/*时间格式化 + 拼接*/
 					let hour = thisDate.getHours();
 					let minute = thisDate.getMinutes();
@@ -429,10 +447,27 @@
 					this.todayList.push(ones)
 				}
 			}
-			// 写到这里：要添加按照日期显示日程。这里由于日程数据不够，所以先去写添加日程。
-
 			console.log(this.todayList)
 		},
+		enterDetail(index,e){
+			//点击进入时间详情
+			let eventID = index
+			// /*时间格式处理*/
+			// /*时间格式化 + 拼接*/
+			// let hour = this.pickDay.getHours();
+			// let minute = this.pickDay.getMinutes();
+			// hour = hour > 9 ? hour : '0' + hour
+			// minute = minute > 9 ? minute : '0' + minute
+			// let time = hour + ':' + minute+":00"
+			// /*处理年月*/
+			let eventDate = this.formatDate(this.pickDay.getFullYear(), this.pickDay.getMonth() + 1, this.pickDay.getDate())
+			let eventDetail = encodeURIComponent(JSON.stringify(this.todayList[index]))
+			uni.navigateTo({
+			    url: '/pages/schedule/scheDetail?id='+eventID+'&date='+eventDate+'&detail='+eventDetail   
+				/*跳转页面路径,传递的参数为日程id和日程所在日的时间戳*/
+			});
+			
+		}
 		
 		
 			

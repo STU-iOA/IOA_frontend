@@ -86,8 +86,17 @@
 				"enablePullDownRefresh": true
 			}
 		},
+		{
+		    "path" : "pages/schedule/scheDetail",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
 		//李思瑶 管理订阅
-			{
+		{
 			"path": "pages/ManageSubscription/subscription",
 			"style": {
 				"navigationBarTitleText": "订阅",
@@ -102,6 +111,7 @@
 		
 			}
 		}
+        
     ],	
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
