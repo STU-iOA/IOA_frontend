@@ -36,7 +36,7 @@
 							</view>
 							
 							<view class="popup-btn">
-									<view><button type="default" class="affirm bubble" @tap="affirm">确认</button></view>
+									<view><button type="default" class="affirm bubble" @tap="affirm()">确认</button></view>
 									<view><button type="default" class="bubble" @tap="cancel">取消</button></view>
 							</view>
 					    </view>
@@ -52,7 +52,7 @@
 									<button type="default"  v-for="(item,index) in shuyuan" :class="{'labelTag': rSelectShu.indexOf(index)!=-1}" @click="aClickShu(index)" >{{item}}</button>
 							</view>
 							<view class="popup-btn">		
-											<view><button type="default" class="affirm bubble" @tap="affirm">确认</button></view>
+											<view><button type="default" class="affirm bubble" @tap="shuAffirm()()">确认</button></view>
 											<view><button type="default" class="bubble" @tap="cancel2">取消</button></view>
 							</view>
 					    </view>
@@ -66,13 +66,14 @@
 		<!-- 标签输入添加 -->
 		<view class="input_box">
 			<view class="inside">
-				<input type="text" value="输入订阅内容关键词1" v-model="aSelectList"/>
+				<div class="select"  v-for="(item,index) in aSelectList">{{item}}</div>
+				<div class="select"  v-for="(item,index) in aSelectList2">{{item}}</div>
 			</view>
 
 		</view>
-		<navigator url="./subscription">
-		<button type="default" class="ok bubble" @click="goBack()">确定</button>
-		</navigator>
+		<!-- <navigator url="./subscription"> -->
+		<button type="default" class="ok bubble" @tap="allAffirm();goBack()">确定</button>
+		<!-- </navigator> -->
 		<!-- 标签添加 结束 -->
 		
 		
@@ -95,19 +96,22 @@
 					rSelectjiangjin:[],
 					rSelectjingsai:[],
 					aSelectList:[],
-					  
-					  isRouterAlive: true,
-					  
+					aSelectList2:[],
+					listIndex:0,
+					listIndex2:0,
+					keywords:[],
+					allList:[],
+					isRouterAlive: true,
 					shuyuan:['德馨书院','淑德书院','敬一书院','修远书院','明德书院','弘毅书院','思源书院','知行书院','至诚书院'],
 					xveyuan:['工学院','理学院','文学院','商学院','法学院','马克思主义学院','长江艺术与设计学院','长江新闻与传播学院'],
-					jiangjin:['奖学金'],
-					jingsai:['竞赛'],
+				
 			}
 		},
 	
 		
-		onLoad() {
+		onShow() {
 			  // this.reload();
+			  this.getSubDepart();
 		},
 		methods: {
 				// 弹窗
@@ -120,18 +124,8 @@
 						this.show = false;
 					},
 					aClickXve(index) {
-						 let arrIndex = this.rSelectXve.indexOf(index);
-						if(arrIndex>-1){
-							this.rSelectXve.splice(arrIndex,1);
-							for (let i = 0 ; i<this.aSelectList.length ; i++){
-								if(this.xveyuan[index] == this.aSelectList[i]){
-									this.aSelectList.splice(i,1);
-								}
-							}
-						}else{
-							this.rSelectXve.push(index);
-							this.aSelectList.push(this.xveyuan[index]);
-						}
+						this.listIndex=index;
+						
 					},
 					reload () {
 					      this.isRouterAlive = false
@@ -139,61 +133,86 @@
 					        this.isRouterAlive = true
 					      })},
 					aClickShu(index) {
-						 let arrIndex = this.rSelectShu.indexOf(index);
-						if(arrIndex>-1){
-							this.rSelectShu.splice(arrIndex,1);
-							for (let i = 0 ; i<this.aSelectList.length ; i++){
-								if(this.shuyuan[index] == this.aSelectList[i]){
-									this.aSelectList.splice(i,1);
-								}
-							}
-						}else{
-							this.rSelectShu.push(index);
-							this.aSelectList.push(this.shuyuan[index]);
-						}
+						this.listIndex2=index;
 					},
-					// aClickjiangjin(index) {
-					// 	 let arrIndex = this.rSelectjiangjin.indexOf(index);
-					// 	if(arrIndex>-1){
-					// 		this.rSelectjiangjin.splice(arrIndex,1);
-					// 		for (let i = 0 ; i<this.aSelectList.length ; i++){
-					// 			if(this.jiangjin[index] == this.aSelectList[i]){
-					// 				this.aSelectList.splice(i,1);
-					// 			}
-					// 		}
-					// 	}else{
-					// 		this.rSelectjiangjin.push(index);
-					// 		this.aSelectList.push(this.jiangjin[index]);
-					// 	}
-					// },
-					// aClickjingsai(index) {
-					// 	 let arrIndex = this.rSelectjingsai.indexOf(index);
-					// 	if(arrIndex>-1){
-					// 		this.rSelectjingsai.splice(arrIndex,1);
-					// 		for (let i = 0 ; i<this.aSelectList.length ; i++){
-					// 			if(this.jingsai[index] == this.aSelectList[i]){
-					// 				this.aSelectList.splice(i,1);
-					// 			}
-					// 		}
-					// 	}else{
-					// 		this.rSelectjingsai.push(index);
-					// 		this.aSelectList.push(this.jingsai[index]);
-					// 	}
-					// },
+					//获取缓存的用户订阅词
+						getSubDepart(){
+									let that=this;
+									let keyWords=[];
+									uni.getStorage({
+										key:'subDepart',
+										success: function(res) {
+											keyWords = res.data;
+											// console.log(keyWords[0]);
+										}
+									});
+									this.keywords=keyWords;
+									console.log('ok');
+									// console.log(this.keywords[0]);
+								},
 					// 点击弹窗确认
 					affirm() { 
 						this.show = false;
 						this.show2=false;
+						let arrIndex = this.rSelectXve.indexOf(this.listIndex);//获取目标所选关键词索引
+						// console.log(arrIndex);
+						if(arrIndex>-1){
+							this.rSelectXve.splice(arrIndex,1);//获取单个关键词【应对另选中其它按钮后更改数组的情况】
+							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								if(this.xveyuan[this.listIndex] == this.aSelectList[i]){
+									this.aSelectList.splice(i,1);
+								}
+							}
+							
+						}else{
+							console.log(this.aSelectList)
+							// 判断所选订阅词是否重复【应对重复选中已订阅词情况】
+							for(let j=0;j<this.keywords.length;j++){
+							for (let i = 0 ; i<this.aSelectList.length ; i++){
+								//将新增订阅词数组与本地缓存的订阅词相比较，若相同，则删除对应新增订阅词，避免重复添加
+								if(this.keywords[j] == this.aSelectList[i]){
+									this.aSelectList.splice(i,1);
+								}
+								
+							}};
+							this.rSelectXve.push(this.listIndex);
+							//将最终绝对添加的数组push进新数组【后续会将此数组进行拼接后，放入本地缓存】
+							this.aSelectList.push(this.xveyuan[this.listIndex]);
+							console.log(this.aSelectList);
+						}
+					},
+					shuAffirm(){
+						this.show = false;
+						this.show2=false;
+						let arrIndex2 = this.rSelectShu.indexOf(this.listIndex2);
+						if(arrIndex2>-1){
+							this.rSelectShu.splice(arrIndex2,1);
+							for (let i = 0 ; i<this.aSelectList2.length ; i++){
+								if(this.shuyuan[this.listIndex2] == this.aSelectList2[i]){
+									this.aSelectList2.splice(i,1);
+								}
+							}
+						}else{
+							this.rSelectShu.push(this.listIndex2);
+							this.aSelectList2.push(this.shuyuan[this.listIndex2]);
+						
+						}
+						// console.log(this.aSelectList);
+						
+						console.log(this.allList);
+						
+					},
+					allAffirm(){
+						// 将书院与学院最终确定添加的订阅词进行追加拼接存入本地缓存
+						this.allList=this.keywords.concat(this.aSelectList,this.aSelectList2);
 						new Promise((resolve,reject)=>{
 								uni.setStorage({
 									key:"subDepart",
-									data:this.aSelectList,
+									data:this.allList,
 									success: function() {
 										resolve(1);
 									}
 								});});
-						
-					
 					},
 					// 弹窗
 						tapPopup2() {
@@ -252,17 +271,17 @@
 		
 		text-align:center; 
 		width:266px ;
-		height: 50px;
+		height: 250px;
 		background:rgba(209, 213, 229, 0.7);
 		border-radius: 40px;
 		color: #696969;	
 		font-size: 30px;
 		box-shadow: 0 0 10px #4d4d4d;
 	}
-	.inside input{
+	.inside select{
 			margin-top: 13px;
 	}
-	.inside:hover{
+	.select:hover{
 		
 		border: 4px solid #b67fca;
 	}
@@ -364,6 +383,9 @@
 		border-radius: 40px;
 		color: white;
 		box-shadow: 0 0 10px #4d4d4d;
+	}
+	.select{
+		font-size: 20px;
 	}
 	/* 订阅选择样式 */
 	.choice_content{
